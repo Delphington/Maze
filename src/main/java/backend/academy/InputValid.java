@@ -8,6 +8,14 @@ public class InputValid {
     private static int weight = 0;
     private static String line;
 
+    public static int getHeight() {
+        return height;
+    }
+
+    public static int getWeight() {
+        return weight;
+    }
+
     private static int MIN_SIZE = 3;
     private static Scanner scanner = new Scanner(System.in);
 
@@ -20,7 +28,6 @@ public class InputValid {
             System.out.println("Минимальный размер лабиринта 3");
             return false;
         }
-
         return true;
     }
 
