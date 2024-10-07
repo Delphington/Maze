@@ -104,7 +104,7 @@ private static boolean validCoordinateSize(int cord, String str) {
 
 private static boolean validCoordinateNotWall(Maze maze, Coordinate point) {
     Cell[][] grid = maze.getGrid();
-    if (grid[point.row() - 1][point.col() - 1].type != Cell.Type.WALL) {
+    if (grid[point.row()][point.col()].type != Cell.Type.WALL) {
         return true;
     }
     System.out.println("К сожалению выбранная точка является стеной. Выбири другую");
@@ -131,12 +131,12 @@ public static void inputCoordinatePoint(Maze maze, int numberPoint) {
             }
         }
         if (numberPoint == 1) {
-            start = new Coordinate(xF, yF);
+            start = new Coordinate(xF-1, yF-1);
             if (validCoordinateNotWall(maze, start)) {
                 break;
             }
         } else {
-            finish = new Coordinate(xF, yF);
+            finish = new Coordinate(xF-1, yF-1);
             if (validCoordinateNotWall(maze, finish)) {
                 break;
             }

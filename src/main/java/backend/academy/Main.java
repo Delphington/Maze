@@ -2,6 +2,7 @@ package backend.academy;
 
 import lombok.experimental.UtilityClass;
 import org.checkerframework.checker.units.qual.C;
+import java.util.Collections;
 import java.util.List;
 
 @UtilityClass
@@ -13,7 +14,7 @@ public class Main {
         //Создали метод для генерации
         DFSMaze dfsMaze = new DFSMaze();
         //Создали сам лабик с координатами
-        Maze maze = dfsMaze.generate(InputValid.getHeight(),InputValid.getWeight());
+        Maze maze = dfsMaze.generate(InputValid.getHeight(), InputValid.getWeight());
 
         //Создаем объект render
         DFSMazeRender dfsMazeRender = new DFSMazeRender();
@@ -23,26 +24,30 @@ public class Main {
 
         System.out.println(printMaze);
 
-
-
-
-        InputValid.inputCoordinatePoint(maze,1);
-        InputValid.inputCoordinatePoint(maze,2);
-
+        InputValid.inputCoordinatePoint(maze, 1);
+        InputValid.inputCoordinatePoint(maze, 2);
 
         Coordinate point1 = InputValid.getStart();
-        System.out.println("Наша точка1 : " +point1.row() + " " + point1.col());
+
+        //TODO: --------------------
+        //Точки начало с нуля
+        //Там еще в Input я maze заново дергаю
+
+        System.out.println("Наша точка1 : " + point1.row() + " " + point1.col());
 
         Coordinate point2 = InputValid.getFinish();
-        System.out.println("Наша точка2 : " +point2.row() + " " + point2.col());
+        System.out.println("Наша точка2 : " + point2.row() + " " + point2.col());
 
         //Проверить если вторая точка меньше второй
 
-
+        System.out.println("-----------------------------------");
         DFSSolverMaze dfsSolverMaze = new DFSSolverMaze();
-        List<Coordinate> path = dfsSolverMaze.solve(maze,point1,point2);
+        List<Coordinate> path = dfsSolverMaze.solve(maze, point1, point2);
+        System.out.println(path);
 
-
+        System.out.println("-----------------------------------");
+        String printMazePath = dfsMazeRender.render(maze, path);
+        System.out.println(printMazePath);
 
     }
 }

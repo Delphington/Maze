@@ -10,8 +10,22 @@ public final class Maze {
 
     private final Cell[][] grid;
 
+    public int getHeight() {
+        return height;
+    }
 
-//     checkValidDate(int height, int width, Cell[][] grid){
+    public int getWidth() {
+        return width;
+    }
+
+    public Cell getCell(int x, int y){
+        return grid[x][y];
+    }
+
+
+
+
+    //     checkValidDate(int height, int width, Cell[][] grid){
 //
 //
 //    }
