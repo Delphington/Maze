@@ -7,6 +7,19 @@ public class InputValid {
     private static int height = 0;
     private static int weight = 0;
     private static String line;
+    private static Coordinate start;
+    private static Coordinate finish;
+
+    public static Coordinate getFinish() {
+        return finish;
+    }
+
+    public static Coordinate getStart() {
+        return start;
+    }
+
+    private static int MIN_SIZE = 3;
+    private static Scanner scanner = new Scanner(System.in);
 
     public static int getHeight() {
         return height;
@@ -16,11 +29,8 @@ public class InputValid {
         return weight;
     }
 
-    private static int MIN_SIZE = 3;
-    private static Scanner scanner = new Scanner(System.in);
-
     //Для проверки размера лабиринта
-    public static boolean validSizeMaze(int size) {
+    private static boolean validSizeMaze(int size) {
         if (size < 0) {
             System.out.println("Размер не может быть отрицательным");
             return false;
@@ -31,49 +41,106 @@ public class InputValid {
         return true;
     }
 
-    public static Optional<Object> checkLineToInt(String str) {
-        if (line == null || str.isEmpty()) {
-            return Optional.empty();
-        }
-        try {
-            int x = Integer.valueOf(str);
-            return Optional.ofNullable(x);
-        } catch (RuntimeException runtimeException) {
-        }
-        return Optional.empty();
-    }
-
     public static void print() {
         System.out.println("heigth = " + height);
         System.out.println("weigt = " + weight);
     }
 
-    public static void input() {
-        //ввод ширины
+    public static void inputSizeOfMaze() {
         while (true) {
-            System.out.println("Введите ширину лабирита: ");
+            System.out.print("Введите размер лабиринта {cow, col}: ");
             line = scanner.nextLine();
-            Optional<Object> optional = checkLineToInt(line);
+            Optional<Object> optional = checkLineSeparate(line.trim());
             if (optional.isPresent()) {
-                if (validSizeMaze((int) optional.get())) {
-                    weight = (int) optional.get();
+                int[] g = (int[]) optional.get();
+                if (validSizeMaze(g[0]) && validSizeMaze(g[1])) {
+                    weight = g[0];
+                    height = g[1];
                     break;
                 }
-
-            }
-        }
-
-        while (true) {
-            System.out.println("Введите высоту лабирита: ");
-            line = scanner.nextLine();
-            Optional<Object> optional = checkLineToInt(line);
-            if (optional.isPresent()) {
-                if (validSizeMaze((int) optional.get())) {
-                    height = (int) optional.get();
-                    break;
-                }
-
+            } else {
+                System.out.println("Вы ввели пустую строку или не число");
             }
         }
     }
+
+private static Optional<Object> checkLineSeparate(String str) {
+    if (line == null || str.isEmpty()) {
+        return Optional.empty();
+    }
+    try {
+
+        String[] arr = str.split(" ");
+        if (arr.length != 2) {
+            return Optional.empty();
+        }
+
+        int x = Integer.valueOf(arr[0]);
+        int y = Integer.valueOf(arr[1]);
+        int[] ans = {x, y};
+        return Optional.ofNullable(ans);
+    } catch (RuntimeException runtimeException) {
+    }
+    return Optional.empty();
+}
+
+private static boolean validCoordinateSize(int cord, String str) {
+    //случай когда точка "w" - координаты x
+    if (str.equals("w")) {
+        if (cord > 0 && cord <= weight) {
+            return true;
+        }
+        System.out.println("Кооридината должна быть положительная и меньше размера лабиринта");
+        return false;
+    } else if (str.equals("h")) {
+        if (cord > 0 && cord <= height) {
+            return true;
+        }
+        System.out.println("Кооридината должна быть положительная и меньше размера лабиринта");
+        return false;
+    }
+    return false;
+}
+
+private static boolean validCoordinateNotWall(Maze maze, Coordinate point) {
+    Cell[][] grid = maze.getGrid();
+    if (grid[point.row() - 1][point.col() - 1].type != Cell.Type.WALL) {
+        return true;
+    }
+    System.out.println("К сожалению выбранная точка является стеной. Выбири другую");
+    return false;
+}
+
+//Метод для выбора точек
+public static void inputCoordinatePoint(Maze maze, int numberPoint) {
+    while (true) {
+        int xF, yF;
+        while (true) {
+            System.out.print("Введите координаты точки " + numberPoint + " {cow, col}" + ": ");
+            line = scanner.nextLine();
+            Optional<Object> optional = checkLineSeparate(line.trim());
+            if (optional.isPresent()) {
+                int[] g = (int[]) optional.get();
+                if ((validCoordinateSize(g[0], "w")) && (validCoordinateSize(g[1], "h"))) {
+                    xF = g[0];
+                    yF = g[1];
+                    break;
+                }
+            } else {
+                System.out.println("Вы ввели пустую строку или не число");
+            }
+        }
+        if (numberPoint == 1) {
+            start = new Coordinate(xF, yF);
+            if (validCoordinateNotWall(maze, start)) {
+                break;
+            }
+        } else {
+            finish = new Coordinate(xF, yF);
+            if (validCoordinateNotWall(maze, finish)) {
+                break;
+            }
+        }
+    }
+}
 }
