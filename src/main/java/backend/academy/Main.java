@@ -9,45 +9,65 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        InputValid.inputSizeOfMaze();
-        InputValid.print();
-        //Создали метод для генерации
-        DFSMaze dfsMaze = new DFSMaze();
-        //Создали сам лабик с координатами
-        Maze maze = dfsMaze.generate(InputValid.getHeight(), InputValid.getWeight());
+        InputValid.inputSizeOfMaze(); // запрос ввода координат
+        InputValid.inputTypeGenerateMaze(); // запрос ввода координат
+        InputValid.voidTypeSolveMaze(); //Запрос на запрос метода решения
 
-        //Создаем объект render
-        DFSMazeRender dfsMazeRender = new DFSMazeRender();
 
-        //Создаем рендер всего этого дела
-        String printMaze = dfsMazeRender.render(maze);
+        Generator TypeMaze; //Тип генерации лабиринта
+        Maze maze; // Наш лабиринт
+        Renderer rendererMaze;
+        Solver solver;
 
+        //Генерация каким методом будем генерировать
+        if(InputValid.getTypeGenerate() == InputValid.TypeGenerate.DFS){
+            TypeMaze = new DFSMaze();
+            rendererMaze = new DFSMazeRender();
+        }else{
+            //maze
+            TypeMaze = new DFSMaze();
+            rendererMaze = new DFSMazeRender();
+        }
+
+        //Каким методом будем решать
+        if(InputValid.getTypeSolve() == InputValid.TypeSolve.DFS){
+            solver = new DFSSolverMaze();
+        }else {
+            solver = new BFSSolverMaze();
+        }
+
+
+
+        //-------------------------------------
+        maze = TypeMaze.generate(InputValid.getHeight(), InputValid.getWeight());
+
+
+        //Исходный, что будем выводить
+        String printMaze = rendererMaze.render(maze);
         System.out.println(printMaze);
 
+
+        //Запрос точек
         InputValid.inputCoordinatePoint(maze, 1);
         InputValid.inputCoordinatePoint(maze, 2);
 
         Coordinate point1 = InputValid.getStart();
+        Coordinate point2 = InputValid.getFinish();
+
+        //Вывод всей информации
+        InputValid.printInfo();
+
+
+        //Получали массив точек
+        List<Coordinate> path = solver.solve(maze, point1, point2);
+
+        //Печатаем Итог
+        String printMazePath = rendererMaze.render(maze, path);
+        System.out.println(printMazePath);
 
         //TODO: --------------------
         //Точки начало с нуля
         //Там еще в Input я maze заново дергаю
-
-        System.out.println("Наша точка1 : " + point1.row() + " " + point1.col());
-
-        Coordinate point2 = InputValid.getFinish();
-        System.out.println("Наша точка2 : " + point2.row() + " " + point2.col());
-
-        //Проверить если вторая точка меньше второй
-
-        System.out.println("-----------------------------------");
-        DFSSolverMaze dfsSolverMaze = new DFSSolverMaze();
-        List<Coordinate> path = dfsSolverMaze.solve(maze, point1, point2);
-        System.out.println(path);
-
-        System.out.println("-----------------------------------");
-        String printMazePath = dfsMazeRender.render(maze, path);
-        System.out.println(printMazePath);
 
     }
 }
