@@ -22,20 +22,6 @@ public final class Maze {
     }
 
 
-
-
-    //     checkValidDate(int height, int width, Cell[][] grid){
-//
-//
-//    }
-
-
-//    public Maze(int height, int width, Cell[][] grid) {
-//        this.height = height;
-//        this.width = width;
-//        this.grid = grid;
-//    }
-
     public Maze(Cell [][]grid){
         this.height = grid.length;
         this.width = grid[0].length;

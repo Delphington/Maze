@@ -69,8 +69,8 @@ public class InputValid {
         System.out.println("Размер лабиринта: (" + height + ", " + weight + ")");
         System.out.println("Тип генерации: " + typeGenerate.name());
         System.out.println("Тип решения: " + typeSolve.name());
-        System.out.println("Точка 1: (" + start.row() + ", " + start.col() + ")");
-        System.out.println("Точка 1: (" + finish.row() + ", " + finish.col() + ")");
+        System.out.println("Точка старта: (" + start.row() + ", " + start.col() + ")");
+        System.out.println("Точка финиша: (" + finish.row() + ", " + finish.col() + ")");
         System.out.println("==========================================");
     }
 
@@ -168,14 +168,17 @@ public class InputValid {
         return false;
     }
 
+    //проверка на стенку
     private static boolean validCoordinateNotWall(Maze maze, Coordinate point) {
-        Cell[][] grid = maze.getGrid();
-        if (grid[point.row()][point.col()].type != Cell.Type.WALL) {
+        if (maze.getCell(point.row(), point.col()) .type != Cell.Type.WALL) {
             return true;
         }
         System.out.println("К сожалению выбранная точка является стеной. Выбири другую");
         return false;
     }
+
+
+
 
     //Метод для выбора точек
     public static void inputCoordinatePoint(Maze maze, int numberPoint) {

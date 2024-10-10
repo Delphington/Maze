@@ -10,6 +10,7 @@ public class DFSMazeRender implements Renderer {
         Cell[][] grid = maze.getGrid();
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
+
                 if (grid[x][y].type == Cell.Type.WALL) {
                     builder.append('#');
                 } else {
@@ -25,11 +26,21 @@ public class DFSMazeRender implements Renderer {
     public String render(Maze maze, List<Coordinate> path) {
         StringBuilder builder = new StringBuilder();
         Cell[][] grid = maze.getGrid();
+
+
+
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
                 Coordinate temp = new Coordinate(x,y);
                 if (path != null && path.contains(temp)) {
-                    builder.append('.');
+                    if(path.get(0).equals(temp)){
+                        builder.append("S");
+                    }else if (path.get(path.size()-1).equals(temp)){
+                        builder.append("F");
+                    }else{
+                        builder.append('.');
+                    }
+
                 } else {
                     if (grid[x][y].type == Cell.Type.WALL) {
                         builder.append('#');

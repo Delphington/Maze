@@ -51,6 +51,9 @@ public class Main {
         InputValid.inputCoordinatePoint(maze, 1);
         InputValid.inputCoordinatePoint(maze, 2);
 
+
+
+
         Coordinate point1 = InputValid.getStart();
         Coordinate point2 = InputValid.getFinish();
 
@@ -64,10 +67,6 @@ public class Main {
         //Печатаем Итог
         String printMazePath = rendererMaze.render(maze, path);
         System.out.println(printMazePath);
-
-        //TODO: --------------------
-        //Точки начало с нуля
-        //Там еще в Input я maze заново дергаю
 
     }
 }
