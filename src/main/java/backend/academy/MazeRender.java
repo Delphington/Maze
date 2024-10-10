@@ -2,7 +2,7 @@ package backend.academy;
 
 import java.util.List;
 
-public class DFSMazeRender implements Renderer {
+public class MazeRender implements Renderer {
 
     @Override
     public String render(Maze maze) {

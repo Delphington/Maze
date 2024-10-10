@@ -7,7 +7,6 @@ import java.util.Deque;
 import java.util.List;
 
 public class DFSSolverMaze implements Solver {
-    private int[][] move = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
     private List<Coordinate> getNeighbors(Maze maze, Coordinate point) {
         List<Coordinate> neighbors = new ArrayList<>();
@@ -15,13 +14,11 @@ public class DFSSolverMaze implements Solver {
         for (int[] cell : move) {
             int newRow = point.row() + cell[0];
             int newCol = point.col() + cell[1];
-
             if ((newRow >= 0) && (newRow < maze.getHeight()) && (newCol >= 0) && (newCol < maze.getWidth())) {
                 if (maze.getCell(newRow, newCol).type == Cell.Type.PASSAGE) {
                     neighbors.add(new Coordinate(newRow, newCol));
                 }
             }
-
         }
         return neighbors;
     }

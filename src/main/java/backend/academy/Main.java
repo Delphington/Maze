@@ -1,8 +1,6 @@
 package backend.academy;
 
 import lombok.experimental.UtilityClass;
-import org.checkerframework.checker.units.qual.C;
-import java.util.Collections;
 import java.util.List;
 
 @UtilityClass
@@ -22,11 +20,11 @@ public class Main {
         //Генерация каким методом будем генерировать
         if(InputValid.getTypeGenerate() == InputValid.TypeGenerate.DFS){
             TypeMaze = new DFSMaze();
-            rendererMaze = new DFSMazeRender();
+            rendererMaze = new MazeRender();
         }else{
             //maze
             TypeMaze = new DFSMaze();
-            rendererMaze = new DFSMazeRender();
+            rendererMaze = new MazeRender();
         }
 
         //Каким методом будем решать
