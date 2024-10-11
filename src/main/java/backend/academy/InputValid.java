@@ -1,131 +1,139 @@
 package backend.academy;
 
+import java.io.PrintStream;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class InputValid {
+public final class InputValid implements Constants {
+    private InputValid() {
+    }
 
-    private static int height = 0;
-    private static int weight = 0;
+    private static int heightMaze = 0;
+    private static int widthMaze = 0;
+
+    private static Coordinate startPoint;
+    private static Coordinate finishPoint;
+
+    private static TypeGenerate typeGenerateMaze;
+    private static TypeSolve typeSolveMaze;
+
     private static String line;
-    private static Coordinate start;
-    private static Coordinate finish;
+    private static int xF = 0;
+    private static int yF = 0;
 
-    private static TypeGenerate typeGenerate;
-    private static TypeSolve typeSolve;
-
-    public static TypeGenerate getTypeGenerate() {
-        return typeGenerate;
-    }
-
-    public static TypeSolve getTypeSolve() {
-        return typeSolve;
-    }
+    private static Scanner scanner = new Scanner(System.in);
+    private static PrintStream printStream = System.out;
 
     public enum TypeGenerate {
         DFS,
         Kruskal
     }
 
-
     public enum TypeSolve {
         DFS,
         BFS
     }
 
+    public static TypeGenerate getTypeGenerate() {
+        return typeGenerateMaze;
+    }
+
+    public static TypeSolve getTypeSolve() {
+        return typeSolveMaze;
+    }
+
     public static Coordinate getFinish() {
-        return finish;
+        return finishPoint;
     }
 
     public static Coordinate getStart() {
-        return start;
+        return startPoint;
     }
 
-    private static int MIN_SIZE = 3;
-    private static Scanner scanner = new Scanner(System.in);
-
     public static int getHeight() {
-        return height;
+        return heightMaze;
     }
 
     public static int getWeight() {
-        return weight;
+        return widthMaze;
     }
 
     //Для проверки размера лабиринта
     private static boolean validSizeMaze(int size) {
         if (size < 0) {
-            System.out.println("Размер не может быть отрицательным");
+            printStream.println("Размер не может быть отрицательным");
             return false;
         } else if (size < MIN_SIZE) {
-            System.out.println("Минимальный размер лабиринта 3");
+            printStream.println("Минимальный размер лабиринта 3");
             return false;
         }
         return true;
     }
 
-    public static void printInfo() {
-        System.out.println("==========================================");
-        System.out.println("Размер лабиринта: (" + height + ", " + weight + ")");
-        System.out.println("Тип генерации: " + typeGenerate.name());
-        System.out.println("Тип решения: " + typeSolve.name());
-        System.out.println("Точка старта: (" + start.row() + ", " + start.col() + ")");
-        System.out.println("Точка финиша: (" + finish.row() + ", " + finish.col() + ")");
-        System.out.println("==========================================");
-    }
+    @SuppressWarnings("JavadocMissingLeadingAsterisk")
+    /**
+     public static void printInfo() {
+     printStream.println("==========================================");
+     printStream.println("Размер лабиринта: (" + heightMaze + ", " + widthMaze + ")");
+     printStream.println("Тип генерации: " + typeGenerateMaze.name());
+     printStream.println("Тип решения: " + typeSolveMaze.name());
+     printStream.println("Точка старта: (" + startPoint.row() + ", " + startPoint.col() + ")");
+     printStream.println("Точка финиша: (" + finishPoint.row() + ", " + finishPoint.col() + ")");
+     printStream.println("==========================================");
+     }
+     */
 
     //Метод отвечающий за вбор генерации лабика
     public static void inputTypeGenerateMaze() {
         while (true) {
-            System.out.print("[1] Генерация DFS\n" +
-                "[2] Генерация Kraskal\n" +
-                "Введите метод генерации лабиринта: ");
+            printStream.print("[1] Генерация DFS\n"
+                + "[2] Генерация Kraskal\n"
+                + "Введите метод генерации лабиринта: ");
             line = scanner.nextLine().trim();
-            if (line.matches("^[12]$")) {
+            if (line.matches(TYPES_REG)) {
                 if (line.charAt(0) == '1') {
-                    typeGenerate = TypeGenerate.DFS;
+                    typeGenerateMaze = TypeGenerate.DFS;
                     break;
                 }
-                typeGenerate = TypeGenerate.Kruskal;
+                typeGenerateMaze = TypeGenerate.Kruskal;
                 break;
             }
-            System.out.println("Ошибка! Попробуйте еще раз");
+            printStream.println(WARNING_INPUT);
         }
-
     }
 
     public static void voidTypeSolveMaze() {
         while (true) {
-            System.out.print("[1] DFS\n" +
-                "[2] BFS\n" +
-                "Введите метод решение лабиринта: ");
+            printStream.print("[1] DFS\n"
+                + "[2] BFS\n"
+                + "Введите метод решение лабиринта: ");
             line = scanner.nextLine().trim();
-            if (line.matches("^[12]$")) {
+            if (line.matches(TYPES_REG)) {
                 if (line.charAt(0) == '1') {
-                    typeSolve = TypeSolve.DFS;
+                    typeSolveMaze = TypeSolve.DFS;
                     break;
                 }
-                typeSolve = TypeSolve.BFS;
+                typeSolveMaze = TypeSolve.BFS;
                 break;
             }
-            System.out.println("Ошибка! Попробуйте еще раз");
+            printStream.println(WARNING_INPUT);
         }
     }
 
     public static void inputSizeOfMaze() {
         while (true) {
-            System.out.print("Введите размер лабиринта {cow, col}: ");
+            printStream.print("Введите размер лабиринта {cow, col}: ");
             line = scanner.nextLine();
             Optional<Object> optional = checkLineSeparate(line.trim());
             if (optional.isPresent()) {
                 int[] g = (int[]) optional.get();
                 if (validSizeMaze(g[0]) && validSizeMaze(g[1])) {
-                    weight = g[0];
-                    height = g[1];
+                    widthMaze = g[0];
+                    heightMaze = g[1];
                     break;
                 }
             } else {
-                System.out.println("Вы ввели пустую строку или не число");
+                printStream.println(INCORRECT_INPUT);
             }
         }
     }
@@ -151,41 +159,31 @@ public class InputValid {
     }
 
     private static boolean validCoordinateSize(int cord, String str) {
-        //случай когда точка "w" - координаты x
-        if (str.equals("w")) {
-            if (cord > 0 && cord <= weight) {
-                return true;
-            }
-            System.out.println("Кооридината должна быть положительная и меньше размера лабиринта");
-            return false;
-        } else if (str.equals("h")) {
-            if (cord > 0 && cord <= height) {
-                return true;
-            }
-            System.out.println("Кооридината должна быть положительная и меньше размера лабиринта");
-            return false;
+
+        //случай когда точка "w" - координата X
+        if (str.equals("w") && (cord > 0) && (cord <= widthMaze)) {
+            return true;
+        } else if (str.equals("h") && (cord > 0) && (cord <= heightMaze)) {
+            return true;
         }
+        printStream.println("Кооридината должна быть положительная и меньше размера лабиринта");
         return false;
     }
 
     //проверка на стенку
     private static boolean validCoordinateNotWall(Maze maze, Coordinate point) {
-        if (maze.getCell(point.row(), point.col()) .type != Cell.Type.WALL) {
+        if (maze.getCell(point.row(), point.col()).type != Cell.Type.WALL) {
             return true;
         }
-        System.out.println("К сожалению выбранная точка является стеной. Выбири другую");
+        printStream.println("К сожалению выбранная точка является стеной. Выбири другую");
         return false;
     }
-
-
-
 
     //Метод для выбора точек
     public static void inputCoordinatePoint(Maze maze, int numberPoint) {
         while (true) {
-            int xF, yF;
             while (true) {
-                System.out.print("Введите координаты точки " + numberPoint + " {cow, col}" + ": ");
+                printStream.print("Введите координаты точки " + numberPoint + " {cow, col}" + ": ");
                 line = scanner.nextLine();
                 Optional<Object> optional = checkLineSeparate(line.trim());
                 if (optional.isPresent()) {
@@ -196,17 +194,17 @@ public class InputValid {
                         break;
                     }
                 } else {
-                    System.out.println("Вы ввели пустую строку или не число");
+                    printStream.println(INCORRECT_INPUT);
                 }
             }
             if (numberPoint == 1) {
-                start = new Coordinate(xF - 1, yF - 1);
-                if (validCoordinateNotWall(maze, start)) {
+                startPoint = new Coordinate(xF - 1, yF - 1);
+                if (validCoordinateNotWall(maze, startPoint)) {
                     break;
                 }
             } else {
-                finish = new Coordinate(xF - 1, yF - 1);
-                if (validCoordinateNotWall(maze, finish)) {
+                finishPoint = new Coordinate(xF - 1, yF - 1);
+                if (validCoordinateNotWall(maze, finishPoint)) {
                     break;
                 }
             }

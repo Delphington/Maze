@@ -21,7 +21,6 @@ public final class Maze {
         return grid[x][y];
     }
 
-
     public Maze(Cell [][]grid){
         this.height = grid.length;
         this.width = grid[0].length;

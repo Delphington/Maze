@@ -1,15 +1,18 @@
 package backend.academy;
 
 import lombok.experimental.UtilityClass;
+import java.io.PrintStream;
 import java.util.List;
 
 @UtilityClass
 public class Main {
     public static void main(String[] args) {
 
+
         InputValid.inputSizeOfMaze(); // запрос ввода координат
         InputValid.inputTypeGenerateMaze(); // запрос ввода координат
         InputValid.voidTypeSolveMaze(); //Запрос на запрос метода решения
+
 
 
         Generator TypeMaze; //Тип генерации лабиринта
@@ -23,7 +26,7 @@ public class Main {
             rendererMaze = new MazeRender();
         }else{
             //maze
-            TypeMaze = new DFSMaze();
+            TypeMaze = new KruskalMaze();
             rendererMaze = new MazeRender();
         }
 
