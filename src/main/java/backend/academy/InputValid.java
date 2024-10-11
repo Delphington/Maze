@@ -3,26 +3,26 @@ package backend.academy;
 import java.io.PrintStream;
 import java.util.Optional;
 import java.util.Scanner;
+import lombok.Getter;
 
+@Getter
 public final class InputValid implements Constants {
-    private InputValid() {
-    }
 
-    private static int heightMaze = 0;
-    private static int widthMaze = 0;
+    private int heightMaze = 0;
+    private int widthMaze = 0;
 
-    private static Coordinate startPoint;
-    private static Coordinate finishPoint;
+    private Coordinate startPoint;
+    private Coordinate finishPoint;
 
-    private static TypeGenerate typeGenerateMaze;
-    private static TypeSolve typeSolveMaze;
+    private TypeGenerate typeGenerateMaze;
+    private TypeSolve typeSolveMaze;
 
-    private static String line;
-    private static int xF = 0;
-    private static int yF = 0;
+    private String line;
+    private int xF = 0;
+    private int yF = 0;
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static PrintStream printStream = System.out;
+    private Scanner scanner;
+    private PrintStream printStream;
 
     public enum TypeGenerate {
         DFS,
@@ -34,32 +34,13 @@ public final class InputValid implements Constants {
         BFS
     }
 
-    public static TypeGenerate getTypeGenerate() {
-        return typeGenerateMaze;
-    }
-
-    public static TypeSolve getTypeSolve() {
-        return typeSolveMaze;
-    }
-
-    public static Coordinate getFinish() {
-        return finishPoint;
-    }
-
-    public static Coordinate getStart() {
-        return startPoint;
-    }
-
-    public static int getHeight() {
-        return heightMaze;
-    }
-
-    public static int getWeight() {
-        return widthMaze;
+    InputValid(Scanner scanner, PrintStream printStream) {
+        this.scanner = scanner;
+        this.printStream = printStream;
     }
 
     //Для проверки размера лабиринта
-    private static boolean validSizeMaze(int size) {
+    private boolean validSizeMaze(int size) {
         if (size < 0) {
             printStream.println("Размер не может быть отрицательным");
             return false;
@@ -84,7 +65,7 @@ public final class InputValid implements Constants {
      */
 
     //Метод отвечающий за вбор генерации лабика
-    public static void inputTypeGenerateMaze() {
+    public void inputTypeGenerateMaze() {
         while (true) {
             printStream.print("[1] Генерация DFS\n"
                 + "[2] Генерация Kraskal\n"
@@ -102,7 +83,7 @@ public final class InputValid implements Constants {
         }
     }
 
-    public static void voidTypeSolveMaze() {
+    public void voidTypeSolveMaze() {
         while (true) {
             printStream.print("[1] DFS\n"
                 + "[2] BFS\n"
@@ -120,7 +101,7 @@ public final class InputValid implements Constants {
         }
     }
 
-    public static void inputSizeOfMaze() {
+    public void inputSizeOfMaze() {
         while (true) {
             printStream.print("Введите размер лабиринта {cow, col}: ");
             line = scanner.nextLine();
@@ -133,12 +114,12 @@ public final class InputValid implements Constants {
                     break;
                 }
             } else {
-                printStream.println("Вы ввели пустую строку или не число");
+                printStream.println(INCORRECT_INPUT);
             }
         }
     }
 
-    private static Optional<Object> checkLineSeparate(String str) {
+    private Optional<Object> checkLineSeparate(String str) {
         if (line == null || str.isEmpty()) {
             return Optional.empty();
         }
@@ -158,7 +139,7 @@ public final class InputValid implements Constants {
         return Optional.empty();
     }
 
-    private static boolean validCoordinateSize(int cord, String str) {
+    private boolean validCoordinateSize(int cord, String str) {
 
         //случай когда точка "w" - координата X
         if (str.equals("w") && (cord > 0) && (cord <= widthMaze)) {
@@ -171,7 +152,7 @@ public final class InputValid implements Constants {
     }
 
     //проверка на стенку
-    private static boolean validCoordinateNotWall(Maze maze, Coordinate point) {
+    private boolean validCoordinateNotWall(Maze maze, Coordinate point) {
         if (maze.getCell(point.row(), point.col()).type != Cell.Type.WALL) {
             return true;
         }
@@ -180,7 +161,7 @@ public final class InputValid implements Constants {
     }
 
     //Метод для выбора точек
-    public static void inputCoordinatePoint(Maze maze, int numberPoint) {
+    public void inputCoordinatePoint(Maze maze, int numberPoint) {
         while (true) {
             while (true) {
                 printStream.print("Введите координаты точки " + numberPoint + " {cow, col}" + ": ");
@@ -194,7 +175,7 @@ public final class InputValid implements Constants {
                         break;
                     }
                 } else {
-                    System.out.println("Вы ввели пустую строку или не число");
+                    printStream.println(INCORRECT_INPUT);
                 }
             }
             if (numberPoint == 1) {
