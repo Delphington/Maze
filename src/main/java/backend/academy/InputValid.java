@@ -125,15 +125,15 @@ public final class InputValid implements Constants {
             printStream.print("Введите размер лабиринта {cow, col}: ");
             line = scanner.nextLine();
             Optional<Object> optional = checkLineSeparate(line.trim());
-            if (optional.isPresent()) {
-                int[] g = (int[]) optional.get();
+            try {
+                int[] g = (int[]) optional.orElseThrow(() -> new IllegalArgumentException(INCORRECT_INPUT));
                 if (validSizeMaze(g[0]) && validSizeMaze(g[1])) {
                     widthMaze = g[0];
                     heightMaze = g[1];
                     break;
                 }
-            } else {
-                printStream.println(INCORRECT_INPUT);
+            } catch (IllegalArgumentException e) {
+                printStream.println(e.getMessage());
             }
         }
     }
@@ -186,15 +186,15 @@ public final class InputValid implements Constants {
                 printStream.print("Введите координаты точки " + numberPoint + " {cow, col}" + ": ");
                 line = scanner.nextLine();
                 Optional<Object> optional = checkLineSeparate(line.trim());
-                if (optional.isPresent()) {
-                    int[] g = (int[]) optional.get();
-                    if ((validCoordinateSize(g[0], "w")) && (validCoordinateSize(g[1], "h"))) {
-                        xF = g[0];
-                        yF = g[1];
+                try {
+                    int[] g = (int[]) optional.orElseThrow(() -> new IllegalArgumentException(INCORRECT_INPUT));
+                    if (validSizeMaze(g[0]) && validSizeMaze(g[1])) {
+                        widthMaze = g[0];
+                        heightMaze = g[1];
                         break;
                     }
-                } else {
-                    printStream.println(INCORRECT_INPUT);
+                } catch (IllegalArgumentException e) {
+                    printStream.println(e.getMessage());
                 }
             }
             if (numberPoint == 1) {
