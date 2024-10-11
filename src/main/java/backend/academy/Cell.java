@@ -1,7 +1,11 @@
 package backend.academy;
 
 public class Cell {
-    public enum Type {WALL, PASSAGE}
+
+    public enum Type {
+        WALL,
+        PASSAGE
+    }
 
     public int row;
     public int col;

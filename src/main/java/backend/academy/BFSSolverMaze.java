@@ -12,7 +12,7 @@ public class BFSSolverMaze implements Solver {
 
 
         List<Coordinate> neighbors = new ArrayList<>();
-        for (int[] cell : move) {
+        for (int[] cell : MOVE) {
             int newRow = point.row() + cell[0];
             int newCol = point.col() + cell[1];
 

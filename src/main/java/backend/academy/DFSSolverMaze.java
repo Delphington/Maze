@@ -11,7 +11,7 @@ public class DFSSolverMaze implements Solver {
     private List<Coordinate> getNeighbors(Maze maze, Coordinate point) {
         List<Coordinate> neighbors = new ArrayList<>();
 
-        for (int[] cell : move) {
+        for (int[] cell : MOVE) {
             int newRow = point.row() + cell[0];
             int newCol = point.col() + cell[1];
             if ((newRow >= 0) && (newRow < maze.getHeight()) && (newCol >= 0) && (newCol < maze.getWidth())) {

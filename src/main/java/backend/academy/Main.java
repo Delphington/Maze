@@ -59,7 +59,7 @@ public class Main {
         Coordinate point2 = InputValid.getFinish();
 
         //Вывод всей информации
-        InputValid.printInfo();
+      //  InputValid.printInfo();
 
 
         //Получали массив точек
