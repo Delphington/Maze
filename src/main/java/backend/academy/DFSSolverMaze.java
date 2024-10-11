@@ -14,7 +14,7 @@ public class DFSSolverMaze implements Solver {
         for (int[] cell : MOVE) {
             int newRow = point.row() + cell[0];
             int newCol = point.col() + cell[1];
-            if ((newRow >= 0) && (newRow < maze.getHeight()) && (newCol >= 0) && (newCol < maze.getWidth())) {
+            if ((newRow >= 0) && (newRow < maze.height()) && (newCol >= 0) && (newCol < maze.width())) {
                 if (maze.getCell(newRow, newCol).type == Cell.Type.PASSAGE) {
                     neighbors.add(new Coordinate(newRow, newCol));
                 }
@@ -29,7 +29,7 @@ public class DFSSolverMaze implements Solver {
 
         Deque<Coordinate> stack = new ArrayDeque<>();
 
-        boolean[][] visitedCell = new boolean[maze.getHeight()][maze.getWidth()];
+        boolean[][] visitedCell = new boolean[maze.height()][maze.width()];
 
         stack.push(start);
 

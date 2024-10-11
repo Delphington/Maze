@@ -17,7 +17,7 @@ public class BFSSolverMaze implements Solver {
             int newCol = point.col() + cell[1];
 
             // Выбираем свободные клетки
-            if ((newRow >= 0) && (newRow < maze.getHeight()) && (newCol >= 0) && (newCol < maze.getWidth())) {
+            if ((newRow >= 0) && (newRow < maze.height()) && (newCol >= 0) && (newCol < maze.width())) {
                 if (maze.getCell(newRow, newCol).type == Cell.Type.PASSAGE) {
                     neighbors.add(new Coordinate(newRow, newCol));
                 }
@@ -42,8 +42,8 @@ public class BFSSolverMaze implements Solver {
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate finish) {
 
-        Coordinate[][] previous = new Coordinate[maze.getHeight()][maze.getWidth()];
-        boolean[][] visitedCell = new boolean[maze.getHeight()][maze.getWidth()];
+        Coordinate[][] previous = new Coordinate[maze.height()][maze.width()];
+        boolean[][] visitedCell = new boolean[maze.height()][maze.width()];
         Queue<Coordinate> queue = new LinkedList<>();
         List<Coordinate> neighbors;
 

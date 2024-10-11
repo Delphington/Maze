@@ -7,7 +7,7 @@ public class MazeRender implements Renderer {
     @Override
     public String render(Maze maze) {
         StringBuilder builder = new StringBuilder();
-        Cell[][] grid = maze.getGrid();
+        Cell[][] grid = maze.grid();
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
 
@@ -25,7 +25,7 @@ public class MazeRender implements Renderer {
     @Override
     public String render(Maze maze, List<Coordinate> path) {
         StringBuilder builder = new StringBuilder();
-        Cell[][] grid = maze.getGrid();
+        Cell[][] grid = maze.grid();
 
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
