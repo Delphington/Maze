@@ -27,17 +27,15 @@ public class MazeRender implements Renderer {
         StringBuilder builder = new StringBuilder();
         Cell[][] grid = maze.getGrid();
 
-
-
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
-                Coordinate temp = new Coordinate(x,y);
+                Coordinate temp = new Coordinate(x, y);
                 if (path != null && path.contains(temp)) {
-                    if(path.get(0).equals(temp)){
+                    if (path.get(0).equals(temp)) {
                         builder.append("S");
-                    }else if (path.get(path.size()-1).equals(temp)){
+                    } else if (path.get(path.size() - 1).equals(temp)) {
                         builder.append("F");
-                    }else{
+                    } else {
                         builder.append('.');
                     }
 

@@ -7,6 +7,9 @@ import java.util.Deque;
 import java.util.List;
 
 public class DFSMaze implements Generator {
+    private final int doubleMove = 2;
+    private final int zeroMove = 0;
+    private final int variuos = 4;
 
     private void createPassage(Cell current, Cell next, Cell[][] grid) {
         int newRow = ((current.row + next.row) / 2); //Делится всегда хорошо, так как
@@ -18,15 +21,15 @@ public class DFSMaze implements Generator {
 
     private List<Cell> getUnvisitedNeighbors(Cell cell, Cell[][] grid) {
         List<Cell> neighborCells = new ArrayList<>();
-        int[] rowOffsets = {-2, 2, 0, 0};
-        int[] colOffsets = {0, 0, -2, 2};
+        int[] row = {-doubleMove, doubleMove, zeroMove, zeroMove};
+        int[] col = {0, 0, -doubleMove, doubleMove};
 
-        for (int i = 0; i < 4; i++) {
-            int newRow = cell.row + rowOffsets[i];
-            int newCol = cell.col + colOffsets[i];
+        for (int i = 0; i < variuos; i++) {
+            int newRow = cell.row + row[i];
+            int newCol = cell.col + col[i];
 
-            if ((newRow >= 0) && (newRow < grid.length) && (newCol >= 0) && (newCol < grid[0].length)){
-                if(grid[newRow][newCol].type == Cell.Type.WALL){
+            if ((newRow >= 0) && (newRow < grid.length) && (newCol >= 0) && (newCol < grid[0].length)) {
+                if (grid[newRow][newCol].type == Cell.Type.WALL) {
                     neighborCells.add(grid[newRow][newCol]);
                 }
             }
@@ -34,7 +37,6 @@ public class DFSMaze implements Generator {
         Collections.shuffle(neighborCells);
         return neighborCells;
     }
-
 
     //Сразу приходят валидные данные
     @Override
