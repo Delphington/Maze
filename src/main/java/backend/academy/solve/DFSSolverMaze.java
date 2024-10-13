@@ -15,7 +15,7 @@ import java.util.List;
  * Этот класс ищет путь от заданной стартовой координаты до конечной в лабиринте, представленном
  * объектом Maze
  */
-public class DFSSolverMaze implements Solver {
+public final class DFSSolverMaze implements Solver {
 
 
     /**
