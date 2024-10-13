@@ -1,8 +1,7 @@
 package backend.academy.generate;
 
-import backend.academy.Cell;
-import backend.academy.Maze;
-import backend.academy.generate.Generator;
+import backend.academy.base.Cell;
+import backend.academy.base.Maze;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;

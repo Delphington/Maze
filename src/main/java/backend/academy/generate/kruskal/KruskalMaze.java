@@ -2,12 +2,10 @@ package backend.academy.generate.kruskal;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import backend.academy.Cell;
-import backend.academy.Coordinate;
-import backend.academy.Maze;
+import backend.academy.base.Cell;
+import backend.academy.base.Coordinate;
+import backend.academy.base.Maze;
 import backend.academy.generate.Generator;
 
 // Вспомогательный класс, для объекдинения двух координат в стену

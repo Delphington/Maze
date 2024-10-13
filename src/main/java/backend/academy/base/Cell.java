@@ -1,4 +1,4 @@
-package backend.academy;
+package backend.academy.base;
 
 /**
  * Класс представляющий ячеку в лабиринте

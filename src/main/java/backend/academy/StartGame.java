@@ -1,5 +1,9 @@
 package backend.academy;
 
+import backend.academy.base.Coordinate;
+import backend.academy.base.Maze;
+import backend.academy.base.MazeRender;
+import backend.academy.base.Renderer;
 import backend.academy.generate.DFSMaze;
 import backend.academy.generate.Generator;
 import backend.academy.generate.kruskal.KruskalMaze;

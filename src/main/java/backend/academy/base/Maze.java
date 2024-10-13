@@ -1,4 +1,4 @@
-package backend.academy;
+package backend.academy.base;
 
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package backend.academy.generate.kruskal;
 
-import backend.academy.Coordinate;
+import backend.academy.base.Coordinate;
 import java.util.HashMap;
 import java.util.Map;
 

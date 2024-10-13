@@ -1,4 +1,4 @@
-package backend.academy;
+package backend.academy.base;
 
 /**
  * Представляет собой координату в двумерной сетке.
