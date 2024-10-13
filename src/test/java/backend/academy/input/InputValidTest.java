@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 
 public class InputValidTest {
 
-    private InputValid mazeInput; // Предполагаем, что ваш класс называется MazeInput
+    private InputValid mazeInput;
     private PrintStream printStream;
     private Scanner scanner;
 
