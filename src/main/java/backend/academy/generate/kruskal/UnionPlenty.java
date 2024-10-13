@@ -3,6 +3,7 @@ package backend.academy.generate.kruskal;
 import backend.academy.base.Coordinate;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * Класс для реализации структуры данных "Система непересекающихся множеств"
  * используемой в алгоритме Краскала для объединения клеток
@@ -13,6 +14,7 @@ public class UnionPlenty {
     public UnionPlenty() {
         mapaRoots = new HashMap<>();
     }
+
     /**
      * Инициализирует систему непересекающихся множеств для заданных размеров
      *
@@ -46,7 +48,6 @@ public class UnionPlenty {
             mapaRoots.put(root1, root2);
         }
     }
-
 
     /**
      * Находит корень множества для координаты

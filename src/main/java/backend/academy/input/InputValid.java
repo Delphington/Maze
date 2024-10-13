@@ -42,6 +42,7 @@ public final class InputValid implements Constants {
         DFS,
         BFS
     }
+
     /**
      * Конструктор класса InputValid.
      *
@@ -51,24 +52,6 @@ public final class InputValid implements Constants {
     public InputValid(Scanner scanner, PrintStream printStream) {
         this.scanner = scanner;
         this.printStream = printStream;
-    }
-
-
-    /**
-     * Проверяет, является ли размер лабиринта допустимым.
-     *
-     * @param size Размер лабиринта.
-     * @return true, если размер допустим; false в противном случае.
-     */
-    private boolean isValidSizeMaze(int size) {
-        if (size < 0) {
-            printStream.println("Размер не может быть отрицательным");
-            return false;
-        } else if (size < MIN_SIZE) {
-            printStream.println("Минимальный размер лабиринта 3");
-            return false;
-        }
-        return true;
     }
 
     @SuppressWarnings("JavadocMissingLeadingAsterisk")
@@ -83,6 +66,33 @@ public final class InputValid implements Constants {
      printStream.println("==========================================");
      }
      */
+
+
+    /**
+     * Метод для ввода размеров лабиринта.
+     */
+    public void inputSizeOfMaze() {
+        while (true) {
+            printStream.print("Введите размер лабиринта {cow, col}: ");
+            line = scanner.nextLine();
+            Optional<Object> optional = checkLineSeparate(line.trim());
+
+            try {
+                int[] g = (int[]) optional.orElseThrow(() -> new IllegalArgumentException(INCORRECT_INPUT));
+                if (isValidSizeMaze(g[0]) && isValidSizeMaze(g[1])) {
+                    widthMaze = g[0];
+                    heightMaze = g[1];
+                    break;
+                } else {
+                    printStream.println(INCORRECT_INPUT);
+                }
+            } catch (IllegalArgumentException e) {
+                printStream.println(INCORRECT_INPUT);
+            }
+
+        }
+    }
+
 
     /**
      * Метод для выбора типа генерации лабиринта.
@@ -104,10 +114,12 @@ public final class InputValid implements Constants {
             printStream.println(WARNING_INPUT);
         }
     }
+
+
     /**
      * Метод для выбора типа решения лабиринта.
      */
-    public void voidTypeSolveMaze() {
+    public void inputTypeSolveMaze() {
         while (true) {
             printStream.print("[1] DFS\n"
                 + "[2] BFS\n"
@@ -124,33 +136,34 @@ public final class InputValid implements Constants {
             printStream.println(WARNING_INPUT);
         }
     }
+
+
+
     /**
-     * Метод для ввода размеров лабиринта.
+     * Проверяет, является ли размер лабиринта допустимым.
+     *
+     * @param size Размер лабиринта.
+     * @return true, если размер допустим; false в противном случае.
      */
-    public void inputSizeOfMaze() {
-        while (true) {
-            printStream.print("Введите размер лабиринта {cow, col}: ");
-            line = scanner.nextLine();
-            Optional<Object> optional = checkLineSeparate(line.trim());
-            if (optional.isPresent()) {
-                int[] g = (int[]) optional.get();
-                if (isValidSizeMaze(g[0]) && isValidSizeMaze(g[1])) {
-                    widthMaze = g[0];
-                    heightMaze = g[1];
-                    break;
-                }
-            } else {
-                printStream.println(INCORRECT_INPUT);
-            }
+    private boolean isValidSizeMaze(int size) {
+        if (size < 0) {
+            printStream.println("Размер не может быть отрицательным");
+            return false;
+        } else if (size < MIN_SIZE) {
+            printStream.println("Минимальный размер лабиринта 3");
+            return false;
         }
+        return true;
     }
+
+
     /**
      * Проверяет строку на наличие разделителей и возвращает массив целых чисел.
      *
      * @param str Строка для проверки.
      * @return Optional с массивом целых чисел, если строка корректна; иначе Optional.empty().
      */
-    private Optional<Object> checkLineSeparate(String str) {
+    protected Optional<Object> checkLineSeparate(String str) {
         if (line == null || str.isEmpty()) {
             return Optional.empty();
         }
@@ -215,16 +228,18 @@ public final class InputValid implements Constants {
                 printStream.print("Введите координаты точки " + numberPoint + " {cow, col}" + ": ");
                 line = scanner.nextLine();
                 Optional<Object> optional = checkLineSeparate(line.trim());
-                if (optional.isPresent()) {
-                    int[] g = (int[]) optional.get();
-                    if ((isValidCoordinateSize(g[0], "w")) && (isValidCoordinateSize(g[1], "h"))) {
+                try {
+                    int[] g = (int[]) optional.orElseThrow(() -> new IllegalArgumentException(INCORRECT_INPUT));
+
+                    if (isValidCoordinateSize(g[0], "w") && isValidCoordinateSize(g[1], "h")) {
                         xF = g[0];
                         yF = g[1];
                         break;
                     }
-                } else {
+                } catch (IllegalArgumentException e) {
                     printStream.println(INCORRECT_INPUT);
                 }
+
             }
             if (numberPoint == 1) {
                 startPoint = new Coordinate(xF - 1, yF - 1);

@@ -3,7 +3,6 @@ package backend.academy.base;
 /**
  * Класс представляющий ячеку в лабиринте
  * */
-
 public class Cell {
     public enum Type {
         WALL,
@@ -15,6 +14,8 @@ public class Cell {
     public Type type;
 
     /**
+     * Конструктор для создания ячейки лабиринта.
+     *
      * @param row - ширина
      * @param col - высота
      * @param type - тип ячейки: проход/стена

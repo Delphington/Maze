@@ -28,7 +28,7 @@ public final class StartGame {
 
         inputValid.inputSizeOfMaze(); // запрос ввода координат
         inputValid.inputTypeGenerateMaze(); // запрос ввода координат
-        inputValid.voidTypeSolveMaze(); //Запрос на запрос метода решения
+        inputValid.inputTypeSolveMaze(); //Запрос на запрос метода решения
 
         Generator typeMaze; //Тип генерации лабиринта
         Maze maze; // Наш лабиринт
