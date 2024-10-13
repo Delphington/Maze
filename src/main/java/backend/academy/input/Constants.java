@@ -1,4 +1,4 @@
-package backend.academy;
+package backend.academy.input;
 
 /**
  * Интерфейс для храния константа и повторяющихся полей

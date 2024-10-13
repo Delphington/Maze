@@ -1,5 +1,12 @@
 package backend.academy;
 
+import backend.academy.generate.DFSMaze;
+import backend.academy.generate.Generator;
+import backend.academy.generate.kruskal.KruskalMaze;
+import backend.academy.input.InputValid;
+import backend.academy.solve.BFSSolverMaze;
+import backend.academy.solve.DFSSolverMaze;
+import backend.academy.solve.Solver;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;

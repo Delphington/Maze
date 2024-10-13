@@ -1,4 +1,7 @@
-package backend.academy;
+package backend.academy.solve;
+
+import backend.academy.Coordinate;
+import backend.academy.Maze;
 
 import java.util.List;
 

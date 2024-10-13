@@ -1,11 +1,13 @@
-package backend.academy;
+package backend.academy.generate;
 
+import backend.academy.Cell;
+import backend.academy.Maze;
+import backend.academy.generate.Generator;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
-
 
 /**
  * Класс реализует генерацию лабиринта через поиск в глубину
@@ -16,10 +18,8 @@ public class DFSMaze implements Generator {
     private final int zeroMove = 0;
     private final int variuos = 4;
 
-
-
     private void createPassage(Cell current, Cell next, Cell[][] grid) {
-        int newRow = ((current.row + next.row) / 2); //Делится всегда хорошо, так как //мы через клетку
+        int newRow = (current.row + next.row) / 2; //Делится всегда хорошо, так как //мы через клетку
         int newCol = (current.col + next.col) / 2;
         grid[newRow][newCol].type = Cell.Type.PASSAGE;
         next.type = Cell.Type.PASSAGE;
@@ -66,7 +66,7 @@ public class DFSMaze implements Generator {
             Cell current = stack.peek();
             List<Cell> neighborCells = getUnvisitedNeighbors(current, grid);
             if (!neighborCells.isEmpty()) {
-                Cell next = neighborCells.get((int) (Math.random() * neighborCells.size()));
+                Cell next = neighborCells.get((int) (neighborCells.size() * Math.random()));
                 createPassage(current, next, grid);
                 stack.push(next);
             } else {
@@ -76,5 +76,4 @@ public class DFSMaze implements Generator {
 
         return new Maze(grid);
     }
-
 }

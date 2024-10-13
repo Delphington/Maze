@@ -1,8 +1,11 @@
-package backend.academy;
+package backend.academy.input;
 
 import java.io.PrintStream;
 import java.util.Optional;
 import java.util.Scanner;
+import backend.academy.Cell;
+import backend.academy.Coordinate;
+import backend.academy.Maze;
 import lombok.Getter;
 
 @Getter
@@ -34,7 +37,7 @@ public final class InputValid implements Constants {
         BFS
     }
 
-    InputValid(Scanner scanner, PrintStream printStream) {
+    public InputValid(Scanner scanner, PrintStream printStream) {
         this.scanner = scanner;
         this.printStream = printStream;
     }
