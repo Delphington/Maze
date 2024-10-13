@@ -1,0 +1,122 @@
+package backend.academy.solve;
+
+import backend.academy.base.Cell;
+import backend.academy.base.Coordinate;
+import backend.academy.base.Maze;
+import backend.academy.base.MazeRender;
+import org.junit.Test;
+import java.util.List;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+public class StartGameTest {
+
+    private Cell[][] grid = {
+        {new Cell(0, 0, Cell.Type.WALL), new Cell(0, 1, Cell.Type.WALL), new Cell(0, 2, Cell.Type.WALL),
+            new Cell(0, 3, Cell.Type.WALL), new Cell(0, 4, Cell.Type.WALL), new Cell(0, 5, Cell.Type.WALL),
+            new Cell(0, 6, Cell.Type.WALL)},
+
+        {new Cell(1, 0, Cell.Type.WALL), new Cell(1, 1, Cell.Type.PASSAGE), new Cell(1, 2, Cell.Type.PASSAGE),
+            new Cell(1, 3, Cell.Type.PASSAGE), new Cell(1, 4, Cell.Type.PASSAGE), new Cell(1, 5, Cell.Type.PASSAGE),
+            new Cell(1, 6, Cell.Type.WALL)},
+
+        {new Cell(2, 0, Cell.Type.WALL), new Cell(2, 1, Cell.Type.PASSAGE), new Cell(2, 2, Cell.Type.WALL),
+            new Cell(2, 3, Cell.Type.WALL), new Cell(2, 4, Cell.Type.WALL), new Cell(2, 5, Cell.Type.WALL),
+            new Cell(2, 5, Cell.Type.WALL)},
+
+        {new Cell(3, 0, Cell.Type.WALL), new Cell(3, 1, Cell.Type.PASSAGE), new Cell(3, 2, Cell.Type.PASSAGE),
+            new Cell(3, 3, Cell.Type.PASSAGE), new Cell(3, 4, Cell.Type.PASSAGE), new Cell(3, 5, Cell.Type.PASSAGE),
+            new Cell(3, 6, Cell.Type.WALL)},
+
+        {new Cell(4, 0, Cell.Type.WALL), new Cell(4, 1, Cell.Type.PASSAGE), new Cell(4, 2, Cell.Type.PASSAGE),
+            new Cell(4, 3, Cell.Type.WALL), new Cell(4, 4, Cell.Type.WALL), new Cell(4, 5, Cell.Type.WALL),
+            new Cell(4, 6, Cell.Type.WALL)},
+
+        {new Cell(5, 0, Cell.Type.WALL), new Cell(5, 1, Cell.Type.WALL), new Cell(5, 2, Cell.Type.PASSAGE),
+            new Cell(5, 3, Cell.Type.PASSAGE), new Cell(5, 4, Cell.Type.PASSAGE), new Cell(5, 5, Cell.Type.WALL),
+            new Cell(5, 6, Cell.Type.WALL)},
+
+        {new Cell(6, 0, Cell.Type.WALL), new Cell(6, 1, Cell.Type.PASSAGE), new Cell(6, 2, Cell.Type.PASSAGE),
+            new Cell(6, 3, Cell.Type.WALL), new Cell(6, 4, Cell.Type.PASSAGE), new Cell(6, 5, Cell.Type.PASSAGE),
+            new Cell(6, 6, Cell.Type.WALL)},
+
+        {new Cell(7, 0, Cell.Type.WALL), new Cell(7, 1, Cell.Type.WALL), new Cell(7, 2, Cell.Type.WALL),
+            new Cell(7, 3, Cell.Type.WALL), new Cell(7, 4, Cell.Type.WALL), new Cell(7, 5, Cell.Type.WALL),
+            new Cell(7, 6, Cell.Type.WALL)}
+    };
+
+    @Test
+    public void testRenderMaze() {
+        Maze maze = new Maze(grid);
+        MazeRender renderer = new MazeRender();
+        String p = renderer.render(maze);
+
+        String ans =
+            "#######\n"
+                + "#     #\n"
+                + "# #####\n"
+                + "#     #\n"
+                + "#  ####\n"
+                + "##   ##\n"
+                + "#  #  #\n"
+                + "#######\n";
+
+        assertThat(p).isEqualTo(ans);
+    }
+
+    @Test
+    public void testRenderSolution() {
+        Maze maze = new Maze(grid);
+
+        MazeRender renderer = new MazeRender();
+
+        List<Coordinate> solutionPath = List.of(
+            new Coordinate(1, 1),
+            new Coordinate(1, 2),
+            new Coordinate(1, 3),
+            new Coordinate(1, 4),
+            new Coordinate(1, 5),
+
+            new Coordinate(2, 1),
+
+            new Coordinate(3, 1),
+            new Coordinate(3, 2),
+
+            new Coordinate(4, 2),
+
+            new Coordinate(5, 2),
+            new Coordinate(5, 3),
+            new Coordinate(5, 4),
+
+            new Coordinate(6, 4),
+            new Coordinate(5, 5)
+        );
+
+        String renderedMaze = renderer.render(maze, solutionPath);
+
+        String ans =
+            "#######\n"
+                + "#....S#\n"
+                + "#.#####\n"
+                + "#..   #\n"
+                + "# .####\n"
+                + "##...##\n"
+                + "#  #.F#\n"
+                + "#######\n";
+
+        assertThat(renderedMaze).isEqualTo(ans);
+    }
+
+    @Test
+    public void testSolve() {
+        Maze maze = new Maze(grid);
+        Coordinate start = new Coordinate(1, 5);
+        Coordinate finish = new Coordinate(6, 5);
+        Solver solver = new BFSSolverMaze();
+
+        List<Coordinate> pathSolution = solver.solve(maze, start, finish);
+        assertThat(pathSolution.get(0)).isEqualTo(start);
+        assertThat(pathSolution.get(pathSolution.size() - 1)).isEqualTo(finish);
+    }
+}
+
+

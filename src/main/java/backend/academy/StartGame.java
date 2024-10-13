@@ -20,11 +20,9 @@ public final class StartGame {
     private static PrintStream printStream = System.out;
     private static InputValid inputValid = new InputValid(new Scanner(System.in), printStream);
 
-    private StartGame() {
 
-    }
 
-    public static void start() {
+    public  void start() {
 
         inputValid.inputSizeOfMaze(); // запрос ввода координат
         inputValid.inputTypeGenerateMaze(); // запрос ввода координат
