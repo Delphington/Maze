@@ -1,6 +1,5 @@
 package backend.academy.solve;
 
-import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
 import java.util.ArrayList;
@@ -14,28 +13,6 @@ import java.util.Queue;
  * */
 public class BFSSolverMaze implements Solver {
 
-    /**
-     * Получает соседние клетки для заданной точки.
-     *
-     * @param maze  Лабиринт, в котором ищутся соседние клетки
-     * @param point Точка, для которой ищутся соседи
-     * @return Список соседних клеток, которые являются проходами
-     */
-    private List<Coordinate> getNeighbors(Maze maze, Coordinate point) {
-        List<Coordinate> neighbors = new ArrayList<>();
-        for (int[] cell : MOVE) {
-            int newRow = point.row() + cell[0];
-            int newCol = point.col() + cell[1];
-
-            // Выбираем свободные клетки
-            if ((newRow >= 0) && (newRow < maze.height()) && (newCol >= 0) && (newCol < maze.width())) {
-                if (maze.getCell(newRow, newCol).type == Cell.Type.PASSAGE) {
-                    neighbors.add(new Coordinate(newRow, newCol));
-                }
-            }
-        }
-        return neighbors;
-    }
 
     /**
      * Строит путь на основе двумерного массива
@@ -84,7 +61,7 @@ public class BFSSolverMaze implements Solver {
                 return buildPath(previous, finish);
             }
 
-            neighbors = getNeighbors(maze, current);
+            neighbors = Neighbor.getNeighbors(maze, current);
             for (Coordinate neighbor : neighbors) {
                 //если еще не были там
                 if (!visitedCell[neighbor.row()][neighbor.col()]) {

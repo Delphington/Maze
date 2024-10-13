@@ -1,6 +1,5 @@
 package backend.academy.solve;
 
-import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
 import java.util.ArrayDeque;
@@ -18,27 +17,6 @@ import java.util.List;
 public final class DFSSolverMaze implements Solver {
 
 
-    /**
-     * Получает соседние клетки, которые являются проходами.
-     *
-     * @param maze  Лабиринт, в котором происходит поиск
-     * @param point Текущая координата, для которой нужно найти соседей
-     * @return Список соседних координат, которые являются проходами
-     */
-    private List<Coordinate> getNeighbors(Maze maze, Coordinate point) {
-        List<Coordinate> neighbors = new ArrayList<>();
-
-        for (int[] cell : MOVE) {
-            int newRow = point.row() + cell[0];
-            int newCol = point.col() + cell[1];
-            if ((newRow >= 0) && (newRow < maze.height()) && (newCol >= 0) && (newCol < maze.width())) {
-                if (maze.getCell(newRow, newCol).type == Cell.Type.PASSAGE) {
-                    neighbors.add(new Coordinate(newRow, newCol));
-                }
-            }
-        }
-        return neighbors;
-    }
 
     /**
      * Решает задачу о лабиринте с использованием алгоритма поиска в глубину (DFS)
@@ -69,7 +47,7 @@ public final class DFSSolverMaze implements Solver {
             path.add(current);
             visitedCell[current.row()][current.col()] = true;
 
-            List<Coordinate> neighbors = getNeighbors(maze, current);
+            List<Coordinate> neighbors = Neighbor.getNeighbors(maze, current);
 
             for (Coordinate neighbor : neighbors) {
                 if (!visitedCell[neighbor.row()][neighbor.col()]) {
