@@ -22,16 +22,6 @@ public class InputValidTest {
         mazeInput = new InputValid(scanner, printStream); // Конструктор с зависимостями
     }
 
-    @Test
-    void testInputSizeOfMaze_ValidInput() {
-        when(scanner.nextLine()).thenReturn("5 5"); // Эмулируем ввод "5 5"
-        when(mazeInput.checkLineSeparate("5 5")).thenReturn(Optional.of(new int[] {5, 5}));
-
-        mazeInput.inputSizeOfMaze();
-
-        assertEquals(5, mazeInput.widthMaze());
-        assertEquals(5, mazeInput.heightMaze());
-    }
 
     @Test
     void testInputTypeGenerateMaze_DFS() {

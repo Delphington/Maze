@@ -4,8 +4,9 @@ import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
 import backend.academy.base.MazeRender;
-import org.junit.Test;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class StartGameTest {
@@ -70,11 +71,11 @@ public class StartGameTest {
         MazeRender renderer = new MazeRender();
 
         List<Coordinate> solutionPath = List.of(
-            new Coordinate(1, 1),
-            new Coordinate(1, 2),
-            new Coordinate(1, 3),
-            new Coordinate(1, 4),
             new Coordinate(1, 5),
+            new Coordinate(1, 4),
+            new Coordinate(1, 3),
+            new Coordinate(1, 2),
+            new Coordinate(1, 1),
 
             new Coordinate(2, 1),
 
@@ -88,7 +89,7 @@ public class StartGameTest {
             new Coordinate(5, 4),
 
             new Coordinate(6, 4),
-            new Coordinate(5, 5)
+            new Coordinate(6, 5)
         );
 
         String renderedMaze = renderer.render(maze, solutionPath);
