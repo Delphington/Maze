@@ -1,12 +1,12 @@
 package backend.academy.generate.kruskal;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
 import backend.academy.generate.Generator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // Вспомогательный класс, для объекдинения двух координат в стену
 public class KruskalMaze implements Generator {
@@ -60,22 +60,22 @@ public class KruskalMaze implements Generator {
         Collections.shuffle(walls);
 
         for (Wall wall : walls) {
-            Coordinate cell_1 = wall.cell_1();
-            Coordinate cell_2 = wall.cell_2();
+            Coordinate cell1 = wall.cell1();
+            Coordinate cell2 = wall.cell2();
 
-            Coordinate root_1 = unionPlenty.getFindRoot(cell_1);
-            Coordinate root_2 = unionPlenty.getFindRoot(cell_2);
+            Coordinate root1 = unionPlenty.getFindRoot(cell1);
+            Coordinate root2 = unionPlenty.getFindRoot(cell2);
 
 
-            if (!root_1.equals(root_2)) {
+            if (!root1.equals(root2)) {
 
                 //Объединяем два разных множества
-                unionPlenty.setUnion(cell_1, cell_2);
+                unionPlenty.setUnion(cell1, cell2);
 
-                if (cell_1.row() == cell_2.row()) {
-                    cells[cell_1.row()][Math.max(cell_1.col(), cell_2.col())].type = Cell.Type.PASSAGE;
+                if (cell1.row() == cell2.row()) {
+                    cells[cell1.row()][Math.max(cell1.col(), cell2.col())].type = Cell.Type.PASSAGE;
                 } else {
-                    cells[Math.max(cell_1.row(), cell_2.row())][cell_1.col()].type = Cell.Type.PASSAGE;
+                    cells[Math.max(cell1.row(), cell2.row())][cell1.col()].type = Cell.Type.PASSAGE;
                 }
             }
         }

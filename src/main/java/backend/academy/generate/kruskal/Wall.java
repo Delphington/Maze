@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 class Wall {
-    private Coordinate cell_1;
-    private Coordinate cell_2;
+    private Coordinate cell1;
+    private Coordinate cell2;
 }
 

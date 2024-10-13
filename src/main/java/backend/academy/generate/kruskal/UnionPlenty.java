@@ -23,14 +23,14 @@ public class UnionPlenty {
     }
 
     // Объединения двух координат
-    public void setUnion(Coordinate node_1, Coordinate node_2) {
+    public void setUnion(Coordinate point1, Coordinate point2) {
         //находим корни
-        Coordinate root_1 = getFindRoot(node_1);
-        Coordinate root_2 = getFindRoot(node_2);
-        if (!root_1.equals(root_2)) {
+        Coordinate root1 = getFindRoot(point1);
+        Coordinate root2 = getFindRoot(point2);
+        if (!root1.equals(root2)) {
             // Объединяем, корни множества
             // root1 -> становится дочерним к root2
-            mapaRoots.put(root_1, root_2);
+            mapaRoots.put(root1, root2);
         }
     }
 

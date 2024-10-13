@@ -1,11 +1,11 @@
 package backend.academy.input;
 
-import java.io.PrintStream;
-import java.util.Optional;
-import java.util.Scanner;
 import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
+import java.io.PrintStream;
+import java.util.Optional;
+import java.util.Scanner;
 import lombok.Getter;
 
 @Getter

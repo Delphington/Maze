@@ -1,9 +1,5 @@
 package backend.academy.base;
 
-import backend.academy.base.Cell;
-import backend.academy.base.Coordinate;
-import backend.academy.base.Maze;
-import backend.academy.base.Renderer;
 import java.util.List;
 
 public class MazeRender implements Renderer {

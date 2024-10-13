@@ -3,7 +3,6 @@ package backend.academy.solve;
 import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
