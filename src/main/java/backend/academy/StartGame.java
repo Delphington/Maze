@@ -50,10 +50,15 @@ public final class StartGame {
 
         //-------------------------------------
         maze = typeMaze.generate(inputValid.heightMaze(), inputValid.widthMaze());
-
         //Исходный, что будем выводить
         String printMaze = rendererMaze.render(maze);
         printStream.println(printMaze);
+
+        Obstruction obstruction = new Obstruction(maze);
+        obstruction.print();
+
+
+
 
         //Запрос точек
         inputValid.inputCoordinatePoint(maze, 1);
@@ -70,5 +75,8 @@ public final class StartGame {
         } else {
             printStream.println(printMazePath);
         }
+
+
+
     }
 }

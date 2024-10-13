@@ -16,9 +16,9 @@ public class MazeRender implements Renderer {
             for (int y = 0; y < grid[x].length; y++) {
 
                 if (grid[x][y].type == Cell.Type.WALL) {
-                    builder.append('#');
+                    builder.append('⬛');
                 } else {
-                    builder.append(' ');
+                    builder.append('⬜');
                 }
             }
             builder.append('\n');
@@ -36,18 +36,18 @@ public class MazeRender implements Renderer {
                 Coordinate temp = new Coordinate(x, y);
                 if (path != null && path.contains(temp)) {
                     if (path.get(0).equals(temp)) {
-                        builder.append("S");
+                        builder.append('\uD83D').append('\uDD34'); //точка старта
                     } else if (path.get(path.size() - 1).equals(temp)) {
-                        builder.append("F");
+                        builder.append('\uD83D').append('\uDEA9');   //флаг точка финиша
                     } else {
-                        builder.append('.');
+                        builder.append('\uD83D').append('\uDFE9'); // зеленый
                     }
 
                 } else {
                     if (grid[x][y].type == Cell.Type.WALL) {
-                        builder.append('#');
+                        builder.append('⬛');
                     } else {
-                        builder.append(' ');
+                        builder.append('⬜');
                     }
                 }
             }
