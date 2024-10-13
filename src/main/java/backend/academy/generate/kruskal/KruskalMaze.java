@@ -9,7 +9,19 @@ import java.util.Collections;
 import java.util.List;
 
 // Вспомогательный класс, для объекдинения двух координат в стену
-public class KruskalMaze implements Generator {
+public final class KruskalMaze implements Generator {
+
+    public KruskalMaze() {
+
+    }
+
+    /**
+     * Генерирует лабиринт заданной высоты и ширины
+     *
+     * @param height Высота лабиринта
+     * @param width  Ширина лабиринта
+     * @return Сгенерированный лабиринт
+     */
 
     @Override
     public Maze generate(int height, int width) {
@@ -32,8 +44,6 @@ public class KruskalMaze implements Generator {
             cells[y][0] = new Cell(y, 0, Cell.Type.WALL);
             cells[y][width - 1] = new Cell(y, width - 1, Cell.Type.WALL);
         }
-
-
 
         for (int y = 1; y < height - 1; y++) {
             for (int x = 1; x < width - 1; x++) {
@@ -65,7 +75,6 @@ public class KruskalMaze implements Generator {
 
             Coordinate root1 = unionPlenty.getFindRoot(cell1);
             Coordinate root2 = unionPlenty.getFindRoot(cell2);
-
 
             if (!root1.equals(root2)) {
 

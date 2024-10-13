@@ -4,6 +4,10 @@ import java.util.List;
 
 public class MazeRender implements Renderer {
 
+    public MazeRender() {
+
+    }
+
     @Override
     public String render(Maze maze) {
         StringBuilder builder = new StringBuilder();

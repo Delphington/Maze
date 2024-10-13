@@ -5,10 +5,6 @@ package backend.academy.base;
  * */
 
 public class Cell {
-
-    /**
-     * Тип ячейки
-     * */
     public enum Type {
         WALL,
         PASSAGE

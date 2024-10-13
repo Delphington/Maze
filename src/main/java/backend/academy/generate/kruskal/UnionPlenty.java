@@ -3,14 +3,22 @@ package backend.academy.generate.kruskal;
 import backend.academy.base.Coordinate;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Класс для реализации структуры данных "Система непересекающихся множеств"
+ * используемой в алгоритме Краскала для объединения клеток
+ */
 public class UnionPlenty {
     private Map<Coordinate, Coordinate> mapaRoots;
 
     public UnionPlenty() {
         mapaRoots = new HashMap<>();
     }
-
+    /**
+     * Инициализирует систему непересекающихся множеств для заданных размеров
+     *
+     * @param width  Ширина
+     * @param height Высота
+     */
     public void setInitialization(int width, int height) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -22,7 +30,12 @@ public class UnionPlenty {
         }
     }
 
-    // Объединения двух координат
+    /**
+     * Объединяет два множества
+     *
+     * @param point1 Первая координата.
+     * @param point2 Вторая координата.
+     */
     public void setUnion(Coordinate point1, Coordinate point2) {
         //находим корни
         Coordinate root1 = getFindRoot(point1);
@@ -34,13 +47,19 @@ public class UnionPlenty {
         }
     }
 
-    // Нахоит корень множества
-    public Coordinate getFindRoot(Coordinate node) {
+
+    /**
+     * Находит корень множества для координаты
+     *
+     * @param point Координата для поиска корня.
+     * @return Корень множества.
+     */
+    public Coordinate getFindRoot(Coordinate point) {
         // Проверка является ли родителем, если нет, то ищем
-        if (!mapaRoots.get(node).equals(node)) {
+        if (!mapaRoots.get(point).equals(point)) {
             // Каждый корень будет указывать на узел - родителя
-            mapaRoots.put(node, getFindRoot(mapaRoots.get(node)));
+            mapaRoots.put(point, getFindRoot(mapaRoots.get(point)));
         }
-        return mapaRoots.get(node);
+        return mapaRoots.get(point);
     }
 }

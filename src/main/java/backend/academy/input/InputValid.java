@@ -8,6 +8,12 @@ import java.util.Optional;
 import java.util.Scanner;
 import lombok.Getter;
 
+/**
+ * Класс InputValid отвечает за ввод параметров для генерации и решения лабиринта.
+ * Он предоставляет методы для получения размеров лабиринта, типов генерации и решения
+ * и проверяет корректность введенных данных.
+ */
+
 @Getter
 public final class InputValid implements Constants {
 
@@ -36,13 +42,24 @@ public final class InputValid implements Constants {
         DFS,
         BFS
     }
-
+    /**
+     * Конструктор класса InputValid.
+     *
+     * @param scanner  Объект Scanner для ввода данных.
+     * @param printStream Объект PrintStream для вывода данных.
+     */
     public InputValid(Scanner scanner, PrintStream printStream) {
         this.scanner = scanner;
         this.printStream = printStream;
     }
 
-    //Для проверки размера лабиринта
+
+    /**
+     * Проверяет, является ли размер лабиринта допустимым.
+     *
+     * @param size Размер лабиринта.
+     * @return true, если размер допустим; false в противном случае.
+     */
     private boolean isValidSizeMaze(int size) {
         if (size < 0) {
             printStream.println("Размер не может быть отрицательным");
@@ -67,7 +84,9 @@ public final class InputValid implements Constants {
      }
      */
 
-    //Метод отвечающий за вбор генерации лабика
+    /**
+     * Метод для выбора типа генерации лабиринта.
+     */
     public void inputTypeGenerateMaze() {
         while (true) {
             printStream.print("[1] Генерация DFS\n"
@@ -85,7 +104,9 @@ public final class InputValid implements Constants {
             printStream.println(WARNING_INPUT);
         }
     }
-
+    /**
+     * Метод для выбора типа решения лабиринта.
+     */
     public void voidTypeSolveMaze() {
         while (true) {
             printStream.print("[1] DFS\n"
@@ -103,7 +124,9 @@ public final class InputValid implements Constants {
             printStream.println(WARNING_INPUT);
         }
     }
-
+    /**
+     * Метод для ввода размеров лабиринта.
+     */
     public void inputSizeOfMaze() {
         while (true) {
             printStream.print("Введите размер лабиринта {cow, col}: ");
@@ -121,7 +144,12 @@ public final class InputValid implements Constants {
             }
         }
     }
-
+    /**
+     * Проверяет строку на наличие разделителей и возвращает массив целых чисел.
+     *
+     * @param str Строка для проверки.
+     * @return Optional с массивом целых чисел, если строка корректна; иначе Optional.empty().
+     */
     private Optional<Object> checkLineSeparate(String str) {
         if (line == null || str.isEmpty()) {
             return Optional.empty();
@@ -142,8 +170,14 @@ public final class InputValid implements Constants {
         return Optional.empty();
     }
 
+    /**
+     * Проверяет, являются ли координата валидная
+     *
+     * @param cord   введенная координата
+     * @param str    модфификатор, по которому сравнивают допустим размер по высоте/ширине
+     * @return true, если координата корректна; false в противном случае.
+     */
     private boolean isValidCoordinateSize(int cord, String str) {
-
         //случай когда точка "w" - координата X
         if (str.equals("w") && (cord > 0) && (cord <= widthMaze)) {
             return true;
@@ -154,7 +188,13 @@ public final class InputValid implements Constants {
         return false;
     }
 
-    //проверка на стенку
+    /**
+     * Проверяет, является ли указанная координата стеной.
+     *
+     * @param maze   Лабиринт, в котором проверяется координата.
+     * @param point  Координата для проверки.
+     * @return true, если координата не является стеной; false в противном случае.
+     */
     private boolean isValidCoordinateNotWall(Maze maze, Coordinate point) {
         if (maze.getCell(point.row(), point.col()).type != Cell.Type.WALL) {
             return true;
@@ -163,7 +203,12 @@ public final class InputValid implements Constants {
         return false;
     }
 
-    //Метод для выбора точек
+    /**
+     * Метод для выбора координат точек (стартовой и конечной).
+     *
+     * @param maze       Лабиринт, в котором выбираются точки.
+     * @param numberPoint Номер точки (1 для стартовой, 2 для конечной).
+     */
     public void inputCoordinatePoint(Maze maze, int numberPoint) {
         while (true) {
             while (true) {

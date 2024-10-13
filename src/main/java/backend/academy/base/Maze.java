@@ -2,6 +2,11 @@ package backend.academy.base;
 
 import lombok.Getter;
 
+
+/**
+ * Класс определеяющий само поле лабиринта
+ * */
+
 @Getter
 public final class Maze {
     private final int height;
