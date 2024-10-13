@@ -6,14 +6,20 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
+
+/**
+ * Класс реализует генерацию лабиринта через поиск в глубину
+ * Каждая клетка лабиринта или стена, или проход
+ * */
 public class DFSMaze implements Generator {
     private final int doubleMove = 2;
     private final int zeroMove = 0;
     private final int variuos = 4;
 
+
+
     private void createPassage(Cell current, Cell next, Cell[][] grid) {
-        int newRow = ((current.row + next.row) / 2); //Делится всегда хорошо, так как
-        //мы через клетку
+        int newRow = ((current.row + next.row) / 2); //Делится всегда хорошо, так как //мы через клетку
         int newCol = (current.col + next.col) / 2;
         grid[newRow][newCol].type = Cell.Type.PASSAGE;
         next.type = Cell.Type.PASSAGE;
@@ -22,7 +28,7 @@ public class DFSMaze implements Generator {
     private List<Cell> getUnvisitedNeighbors(Cell cell, Cell[][] grid) {
         List<Cell> neighborCells = new ArrayList<>();
         int[] row = {-doubleMove, doubleMove, zeroMove, zeroMove};
-        int[] col = {0, 0, -doubleMove, doubleMove};
+        int[] col = {zeroMove, zeroMove, -doubleMove, doubleMove};
 
         for (int i = 0; i < variuos; i++) {
             int newRow = cell.row + row[i];

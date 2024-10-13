@@ -40,7 +40,7 @@ public final class InputValid implements Constants {
     }
 
     //Для проверки размера лабиринта
-    private boolean validSizeMaze(int size) {
+    private boolean isValidSizeMaze(int size) {
         if (size < 0) {
             printStream.println("Размер не может быть отрицательным");
             return false;
@@ -108,7 +108,7 @@ public final class InputValid implements Constants {
             Optional<Object> optional = checkLineSeparate(line.trim());
             if (optional.isPresent()) {
                 int[] g = (int[]) optional.get();
-                if (validSizeMaze(g[0]) && validSizeMaze(g[1])) {
+                if (isValidSizeMaze(g[0]) && isValidSizeMaze(g[1])) {
                     widthMaze = g[0];
                     heightMaze = g[1];
                     break;
@@ -139,7 +139,7 @@ public final class InputValid implements Constants {
         return Optional.empty();
     }
 
-    private boolean validCoordinateSize(int cord, String str) {
+    private boolean isValidCoordinateSize(int cord, String str) {
 
         //случай когда точка "w" - координата X
         if (str.equals("w") && (cord > 0) && (cord <= widthMaze)) {
@@ -152,7 +152,7 @@ public final class InputValid implements Constants {
     }
 
     //проверка на стенку
-    private boolean validCoordinateNotWall(Maze maze, Coordinate point) {
+    private boolean isValidCoordinateNotWall(Maze maze, Coordinate point) {
         if (maze.getCell(point.row(), point.col()).type != Cell.Type.WALL) {
             return true;
         }
@@ -169,7 +169,7 @@ public final class InputValid implements Constants {
                 Optional<Object> optional = checkLineSeparate(line.trim());
                 if (optional.isPresent()) {
                     int[] g = (int[]) optional.get();
-                    if ((validCoordinateSize(g[0], "w")) && (validCoordinateSize(g[1], "h"))) {
+                    if ((isValidCoordinateSize(g[0], "w")) && (isValidCoordinateSize(g[1], "h"))) {
                         xF = g[0];
                         yF = g[1];
                         break;
@@ -180,12 +180,12 @@ public final class InputValid implements Constants {
             }
             if (numberPoint == 1) {
                 startPoint = new Coordinate(xF - 1, yF - 1);
-                if (validCoordinateNotWall(maze, startPoint)) {
+                if (isValidCoordinateNotWall(maze, startPoint)) {
                     break;
                 }
             } else {
                 finishPoint = new Coordinate(xF - 1, yF - 1);
-                if (validCoordinateNotWall(maze, finishPoint)) {
+                if (isValidCoordinateNotWall(maze, finishPoint)) {
                     break;
                 }
             }

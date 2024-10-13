@@ -63,6 +63,11 @@ public final class StartGame {
 
         //Печатаем Итог
         String printMazePath = rendererMaze.render(maze, path);
-        printStream.println(printMazePath);
+
+        if (printMazePath.equals(printMaze)) {
+            printStream.println("Путь не был найден");
+        } else {
+            printStream.println(printMazePath);
+        }
     }
 }

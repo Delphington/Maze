@@ -49,6 +49,7 @@ public class MazeRender implements Renderer {
             }
             builder.append('\n');
         }
+
         return builder.toString();
     }
 }
