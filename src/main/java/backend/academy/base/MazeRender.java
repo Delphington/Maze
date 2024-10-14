@@ -2,8 +2,8 @@ package backend.academy.base;
 
 import java.util.List;
 
+@SuppressWarnings("MissingSwitchDefault")
 public class MazeRender implements Renderer {
-
     public MazeRender() {
 
     }
@@ -14,11 +14,9 @@ public class MazeRender implements Renderer {
         Cell[][] grid = maze.grid();
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
-
-                if (grid[x][y].type == Cell.Type.WALL) {
-                    builder.append('⬛');
-                } else {
-                    builder.append('⬜');
+                switch (grid[x][y].type) {
+                    case WALL -> builder.append('⬛');
+                    case PASSAGE -> builder.append('⬜');
                 }
             }
             builder.append('\n');
@@ -44,10 +42,9 @@ public class MazeRender implements Renderer {
                     }
 
                 } else {
-                    if (grid[x][y].type == Cell.Type.WALL) {
-                        builder.append('⬛');
-                    } else {
-                        builder.append('⬜');
+                    switch (grid[x][y].type) {
+                        case WALL -> builder.append('⬛');
+                        case PASSAGE -> builder.append('⬜');
                     }
                 }
             }

@@ -9,7 +9,7 @@ public class Cell {
         WALL,
         PASSAGE,
         MONEY,
-        STONE
+        VIRUS
     }
 
     public int row;

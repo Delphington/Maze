@@ -2,6 +2,7 @@ package backend.academy.base;
 
 import java.util.List;
 
+@SuppressWarnings("MissingSwitchDefault")
 public class DijkstraRender implements Renderer {
     @Override
     public String render(Maze maze) {
@@ -9,14 +10,11 @@ public class DijkstraRender implements Renderer {
         Cell[][] grid = maze.grid();
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
-                if (grid[x][y].type == Cell.Type.WALL) {
-                    builder.append('⬛');
-                } else if (grid[x][y].type == Cell.Type.MONEY) {
-                    builder.append('\uD83E').append('\uDD47');
-                } else if (grid[x][y].type == Cell.Type.STONE) {
-                    builder.append('\uD83E').append('\uDDA0');
-                } else if (grid[x][y].type == Cell.Type.PASSAGE) {
-                    builder.append('⬜');
+                switch (grid[x][y].type) {
+                    case WALL -> builder.append('⬛');
+                    case MONEY -> builder.append('\uD83E').append('\uDD47');
+                    case VIRUS -> builder.append('\uD83E').append('\uDDA0');
+                    case PASSAGE -> builder.append('⬜');
                 }
             }
             builder.append('\n');
@@ -42,20 +40,16 @@ public class DijkstraRender implements Renderer {
                     }
 
                 } else {
-                    if (grid[x][y].type == Cell.Type.WALL) {
-                        builder.append('⬛');
-                    } else if (grid[x][y].type == Cell.Type.MONEY) {
-                        builder.append('\uD83E').append('\uDD47');
-                    } else if (grid[x][y].type == Cell.Type.STONE) {
-                        builder.append('\uD83E').append('\uDDA0');
-                    } else if (grid[x][y].type == Cell.Type.PASSAGE) {
-                        builder.append('⬜');
+                    switch (grid[x][y].type) {
+                        case WALL -> builder.append('⬛');
+                        case MONEY -> builder.append('\uD83E').append('\uDD47');
+                        case VIRUS -> builder.append('\uD83E').append('\uDDA0');
+                        case PASSAGE -> builder.append('⬜');
                     }
                 }
             }
             builder.append('\n');
         }
         return builder.toString();
-
     }
 }

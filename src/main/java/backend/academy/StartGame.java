@@ -57,14 +57,6 @@ public final class StartGame {
         printStream.println(printMaze);
 
 
-        //Перевод нашего поля в матрицу смежности
-        Obstruction obstruction = new Obstruction(maze);
-        obstruction.processing();
-        obstruction.printMatrix();
-        obstruction.SetInisilization();
-        int [][] labik = obstruction.getMatrix();
-        Cell  [][] NEwSels = obstruction.getCells();
-
 
 
 
@@ -79,7 +71,6 @@ public final class StartGame {
 
 
 
-      //  Dijkstra.dijkstra(graph, inputValid.startPoint().col(), inputValid.finishPoint().row());
 
         //Печатаем Итог
         String printMazePath = rendererMaze.render(maze, path);
@@ -89,6 +80,14 @@ public final class StartGame {
         } else {
             printStream.println(printMazePath);
         }
+
+
+        //Перевод нашего поля в матрицу смежности
+        Obstruction obstruction = new Obstruction(maze);
+        obstruction.generateNewMaze();
+        obstruction.applyNewMaze();
+        int [][] labik = obstruction.matrixCost();
+        Cell  [][] NEwSels = obstruction.cells();
 
 
 
@@ -101,12 +100,15 @@ public final class StartGame {
 
         Renderer rederTo = new DijkstraRender();
         String s = rederTo.render(new Maze(NEwSels));
-        String ans = rederTo.render(new Maze(NEwSels), dijkstraMaze.arr());
-
-        System.out.println("-----------------------------------");
         printStream.println(s);
-        System.out.println("-----------------------------------");
-        printStream.println(ans);
+
+        if(dijkstraMaze.path() == null){
+            System.out.println("Путь не найден!");
+        }else{
+            String ans = rederTo.render(new Maze(NEwSels), dijkstraMaze.path());
+            printStream.println(ans);
+        }
+
 
     }
 }
