@@ -1,6 +1,8 @@
 package backend.academy;
 
+import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
+import backend.academy.base.DijkstraRender;
 import backend.academy.base.Maze;
 import backend.academy.base.MazeRender;
 import backend.academy.base.Renderer;
@@ -40,7 +42,7 @@ public final class StartGame {
             //maze
             typeMaze = new KruskalMaze();
         }
-
+        //TODO: swtich
         //Каким методом будем решать
         if (inputValid.typeSolveMaze() == InputValid.TypeSolve.DFS) {
             solver = new DFSSolverMaze();
@@ -54,8 +56,15 @@ public final class StartGame {
         String printMaze = rendererMaze.render(maze);
         printStream.println(printMaze);
 
+
+        //Перевод нашего поля в матрицу смежности
         Obstruction obstruction = new Obstruction(maze);
-        obstruction.print();
+        obstruction.processing();
+        obstruction.printMatrix();
+        obstruction.SetInisilization();
+        int [][] labik = obstruction.getMatrix();
+        Cell  [][] NEwSels = obstruction.getCells();
+
 
 
 
@@ -67,6 +76,11 @@ public final class StartGame {
         //Получали массив точек
         List<Coordinate> path = solver.solve(maze, inputValid.startPoint(), inputValid.finishPoint());
 
+
+
+
+      //  Dijkstra.dijkstra(graph, inputValid.startPoint().col(), inputValid.finishPoint().row());
+
         //Печатаем Итог
         String printMazePath = rendererMaze.render(maze, path);
 
@@ -77,6 +91,22 @@ public final class StartGame {
         }
 
 
+
+        DijkstraMaze  dijkstraMaze = new DijkstraMaze(labik, inputValid.startPoint(), inputValid.finishPoint());
+        dijkstraMaze.start();
+
+        //TODO: закрыть сканер
+
+        System.out.println("-------------------------------------------------");
+
+        Renderer rederTo = new DijkstraRender();
+        String s = rederTo.render(new Maze(NEwSels));
+        String ans = rederTo.render(new Maze(NEwSels), dijkstraMaze.arr());
+
+        System.out.println("-----------------------------------");
+        printStream.println(s);
+        System.out.println("-----------------------------------");
+        printStream.println(ans);
 
     }
 }

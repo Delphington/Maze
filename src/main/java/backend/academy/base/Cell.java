@@ -4,9 +4,12 @@ package backend.academy.base;
  * Класс представляющий ячеку в лабиринте
  * */
 public class Cell {
+
     public enum Type {
         WALL,
-        PASSAGE
+        PASSAGE,
+        MONEY,
+        STONE
     }
 
     public int row;
