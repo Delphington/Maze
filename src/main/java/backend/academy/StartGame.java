@@ -8,6 +8,7 @@ import backend.academy.base.MazeRender;
 import backend.academy.base.Renderer;
 import backend.academy.generate.DFSMaze;
 import backend.academy.generate.Generator;
+import backend.academy.generate.AddingObstruction;
 import backend.academy.generate.kruskal.KruskalMaze;
 import backend.academy.input.InputValid;
 import backend.academy.solve.BFSSolverMaze;
@@ -22,9 +23,7 @@ public final class StartGame {
     private static PrintStream printStream = System.out;
     private static InputValid inputValid = new InputValid(new Scanner(System.in), printStream);
 
-
-
-    public  void start() {
+    public void start() {
 
         inputValid.inputSizeOfMaze(); // запрос ввода координат
         inputValid.inputTypeGenerateMaze(); // запрос ввода координат
@@ -56,21 +55,12 @@ public final class StartGame {
         String printMaze = rendererMaze.render(maze);
         printStream.println(printMaze);
 
-
-
-
-
-
         //Запрос точек
         inputValid.inputCoordinatePoint(maze, 1);
         inputValid.inputCoordinatePoint(maze, 2);
 
         //Получали массив точек
         List<Coordinate> path = solver.solve(maze, inputValid.startPoint(), inputValid.finishPoint());
-
-
-
-
 
         //Печатаем Итог
         String printMazePath = rendererMaze.render(maze, path);
@@ -81,17 +71,14 @@ public final class StartGame {
             printStream.println(printMazePath);
         }
 
-
         //Перевод нашего поля в матрицу смежности
-        Obstruction obstruction = new Obstruction(maze);
+        AddingObstruction obstruction = new AddingObstruction(maze);
         obstruction.generateNewMaze();
         obstruction.applyNewMaze();
-        int [][] labik = obstruction.matrixCost();
-        Cell  [][] NEwSels = obstruction.cells();
+        int[][] labik = obstruction.matrixCost();
+        Cell[][] NEwSels = obstruction.cells();
 
-
-
-        DijkstraMaze  dijkstraMaze = new DijkstraMaze(labik, inputValid.startPoint(), inputValid.finishPoint());
+        DijkstraMaze dijkstraMaze = new DijkstraMaze(labik, inputValid.startPoint(), inputValid.finishPoint());
         dijkstraMaze.start();
 
         //TODO: закрыть сканер
@@ -102,13 +89,12 @@ public final class StartGame {
         String s = rederTo.render(new Maze(NEwSels));
         printStream.println(s);
 
-        if(dijkstraMaze.path() == null){
+        if (dijkstraMaze.path() == null) {
             System.out.println("Путь не найден!");
-        }else{
+        } else {
             String ans = rederTo.render(new Maze(NEwSels), dijkstraMaze.path());
             printStream.println(ans);
         }
-
 
     }
 }

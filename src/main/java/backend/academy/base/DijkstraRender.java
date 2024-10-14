@@ -12,7 +12,7 @@ public class DijkstraRender implements Renderer {
             for (int y = 0; y < grid[x].length; y++) {
                 switch (grid[x][y].type) {
                     case WALL -> builder.append('⬛');
-                    case MONEY -> builder.append('\uD83E').append('\uDD47');
+                    case MEDAL -> builder.append('\uD83E').append('\uDD47');
                     case VIRUS -> builder.append('\uD83E').append('\uDDA0');
                     case PASSAGE -> builder.append('⬜');
                 }
@@ -42,7 +42,7 @@ public class DijkstraRender implements Renderer {
                 } else {
                     switch (grid[x][y].type) {
                         case WALL -> builder.append('⬛');
-                        case MONEY -> builder.append('\uD83E').append('\uDD47');
+                        case MEDAL -> builder.append('\uD83E').append('\uDD47');
                         case VIRUS -> builder.append('\uD83E').append('\uDDA0');
                         case PASSAGE -> builder.append('⬜');
                     }

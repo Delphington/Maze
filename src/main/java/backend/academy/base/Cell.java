@@ -8,7 +8,7 @@ public class Cell {
     public enum Type {
         WALL,
         PASSAGE,
-        MONEY,
+        MEDAL,
         VIRUS
     }
 
