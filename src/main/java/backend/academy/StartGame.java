@@ -1,6 +1,5 @@
 package backend.academy;
 
-import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.DijkstraRender;
 import backend.academy.base.Maze;
@@ -8,14 +7,13 @@ import backend.academy.base.MazeRender;
 import backend.academy.base.Renderer;
 import backend.academy.generate.DFSMaze;
 import backend.academy.generate.Generator;
-import backend.academy.generate.AddingObstruction;
+    import backend.academy.generate.AddingObstruction;
 import backend.academy.generate.kruskal.KruskalMaze;
 import backend.academy.input.InputValid;
 import backend.academy.solve.BFSSolverMaze;
 import backend.academy.solve.DFSSolverMaze;
 import backend.academy.solve.Solver;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,6 +32,7 @@ public final class StartGame {
         Maze maze; // Наш лабиринт
         Renderer rendererMaze = new MazeRender();
         Solver solver;
+        List<Coordinate> path;
 
         //Генерация каким методом будем генерировать
 
@@ -64,7 +63,7 @@ public final class StartGame {
         inputValid.inputCoordinatePoint(maze, 2);
 
         //Получали массив точек
-        List<Coordinate> path = solver.solve(maze, inputValid.startPoint(), inputValid.finishPoint());
+        path = solver.solve(maze, inputValid.startPoint(), inputValid.finishPoint());
 
         //Печатаем Итог
         String printMazePath = rendererMaze.render(maze, path);
@@ -75,12 +74,11 @@ public final class StartGame {
             printStream.println(printMazePath);
         }
 
-        //Перевод нашего поля в матрицу смежности
+
+
         AddingObstruction obstruction = new AddingObstruction(maze);
-        obstruction.generateNewMaze();
-        obstruction.applyNewMaze();
-        int[][] labik = obstruction.matrixCost();
-        Cell[][] NEwSels = obstruction.cells();
+
+        maze = obstruction.generateNewMaze();
 
 
 
@@ -88,17 +86,17 @@ public final class StartGame {
 
         System.out.println("-------------------------------------------------");
 
-        Renderer rederTo = new DijkstraRender();
-        String s = rederTo.render(new Maze(NEwSels));
+        rendererMaze = new DijkstraRender();
+        String s = rendererMaze.render(maze);
         printStream.println(s);
 
 
-        DijkstraMaze dijkstraMaze = new DijkstraMaze();
-        List<Coordinate> FINALPATH = dijkstraMaze.solve(new Maze(NEwSels), inputValid.startPoint(), inputValid.finishPoint());
-        if (dijkstraMaze.path() == null) {
+        solver = new DijkstraMaze();
+        path = solver.solve(maze, inputValid.startPoint(), inputValid.finishPoint());
+        if (path == null) {
             System.out.println("Путь не найден!");
         } else {
-            String ans = rederTo.render(new Maze(NEwSels), FINALPATH);
+            String ans = rendererMaze.render(maze, path);
             printStream.println(ans);
         }
 

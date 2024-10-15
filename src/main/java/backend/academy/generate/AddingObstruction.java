@@ -8,7 +8,6 @@ import lombok.Getter;
 public class AddingObstruction implements ObstacleConstance {
     private Maze maze;
 
-    @Getter
     private int[][] matrixCost;
     @Getter
     private Cell[][] cells;
@@ -18,7 +17,15 @@ public class AddingObstruction implements ObstacleConstance {
         matrixCost = new int[maze.height()][maze.width()];
     }
 
-    public void generateNewMaze() {
+    //SLAP :)
+    public Maze generateNewMaze() {
+        mazeToMatrixIntAndChangeValues();
+        setCellsNewValues();
+        return new Maze(cells);
+
+    }
+
+    private void mazeToMatrixIntAndChangeValues() {
         for (int i = 0; i < maze.height(); i++) {
             for (int j = 0; j < maze.width(); j++) {
                 if (maze.getCell(i, j).type == Cell.Type.WALL) {
@@ -32,7 +39,7 @@ public class AddingObstruction implements ObstacleConstance {
     }
 
     @SuppressWarnings("MissingSwitchDefault")
-    public void applyNewMaze() {
+    private void setCellsNewValues() {
         cells = new Cell[matrixCost.length][matrixCost[0].length];
         for (int i = 0; i < matrixCost.length; i++) {
             for (int j = 0; j < matrixCost[0].length; j++) {
