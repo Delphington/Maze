@@ -15,7 +15,8 @@ import java.util.PriorityQueue;
 
 
 /**
- * Класс DijkstraSolverMaze реализует алгоритм Дейкстры для поиска кратчайшего пути в лабиринте.
+ * Класс DijkstraSolverMaze реализует алгоритм Дейкстры для поиска кратчайшего пути в лабиринте,
+ * который собирает большее количество монеток
  * Алгоритм учитывает различные стоимости клеток: дорога, вируc, награда
  */
 public class DijkstraSolverMaze implements Solver, ObstacleConstance {
