@@ -1,6 +1,9 @@
 package backend.academy;
 
+import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
+import backend.academy.base.Maze;
+import backend.academy.solve.Solver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,22 +14,31 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import lombok.Getter;
 
-public class DijkstraMaze {
+public class DijkstraMaze implements Solver, ObstacleConstance {
 
-    private int[][] maze;
-    private Coordinate start;
-    private Coordinate end;
     @Getter
     private List<Coordinate> path;
 
-    public DijkstraMaze(int[][] maze, Coordinate start, Coordinate end) {
-        this.maze = maze;
-        this.start = start;
-        this.end = end;
+    @SuppressWarnings("MissingSwitchDefault")
+    private int[][] getMatrixCost(Cell[][] cell) {
+        int[][] matrixCost = new int[cell.length][cell[0].length];
+        for (int i = 0; i < matrixCost.length; i++) {
+            for (int j = 0; j < matrixCost[0].length; j++) {
+                switch (cell[i][j].type) {
+                    case WALL -> matrixCost[i][j] = WALL_COST;
+                    case MEDAL -> matrixCost[i][j] = MEDAL_COST;
+                    case VIRUS -> matrixCost[i][j] = VIRUS_COST;
+                    case PASSAGE -> matrixCost[i][j] = PASSAGE_COST;
+                }
+            }
+        }
+        return matrixCost;
     }
 
-    public void start() {
-        path = dijkstra(maze, start.row(), start.col(), end.row(), end.col());
+    @Override
+    public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
+        path = dijkstra(getMatrixCost(maze.grid()), start.row(), start.col(), end.row(), end.col());
+        return path;
     }
 
     // Метод для выполнения алгоритма Дейкстры
@@ -88,7 +100,7 @@ public class DijkstraMaze {
     }
 
     // Метод для восстановления пути от конечной точки к начальной
-    private List<Coordinate> constructPath(Map<String, String> previous,  int endX, int endY) {
+    private List<Coordinate> constructPath(Map<String, String> previous, int endX, int endY) {
         List<Coordinate> localPath = new ArrayList<>();
         String key = endX + "," + endY; // Начинаем с конечной точки
         while (key != null) {

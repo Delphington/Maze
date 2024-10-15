@@ -15,6 +15,7 @@ import backend.academy.solve.BFSSolverMaze;
 import backend.academy.solve.DFSSolverMaze;
 import backend.academy.solve.Solver;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,6 +36,9 @@ public final class StartGame {
         Solver solver;
 
         //Генерация каким методом будем генерировать
+
+
+
         if (inputValid.typeGenerateMaze() == InputValid.TypeGenerate.DFS) {
             typeMaze = new DFSMaze();
         } else {
@@ -78,8 +82,7 @@ public final class StartGame {
         int[][] labik = obstruction.matrixCost();
         Cell[][] NEwSels = obstruction.cells();
 
-        DijkstraMaze dijkstraMaze = new DijkstraMaze(labik, inputValid.startPoint(), inputValid.finishPoint());
-        dijkstraMaze.start();
+
 
         //TODO: закрыть сканер
 
@@ -89,10 +92,13 @@ public final class StartGame {
         String s = rederTo.render(new Maze(NEwSels));
         printStream.println(s);
 
+
+        DijkstraMaze dijkstraMaze = new DijkstraMaze();
+        List<Coordinate> FINALPATH = dijkstraMaze.solve(new Maze(NEwSels), inputValid.startPoint(), inputValid.finishPoint());
         if (dijkstraMaze.path() == null) {
             System.out.println("Путь не найден!");
         } else {
-            String ans = rederTo.render(new Maze(NEwSels), dijkstraMaze.path());
+            String ans = rederTo.render(new Maze(NEwSels), FINALPATH);
             printStream.println(ans);
         }
 

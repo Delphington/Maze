@@ -1,15 +1,12 @@
 package backend.academy.generate;
 
+import backend.academy.ObstacleConstance;
 import backend.academy.base.Cell;
 import backend.academy.base.Maze;
 import lombok.Getter;
 
-public class AddingObstruction {
+public class AddingObstruction implements ObstacleConstance {
     private Maze maze;
-    private final int roadCost = 10;
-    private final int medalCost = 5;
-    private final int virusCost = 20;
-    private final int[] typeCostCell = {roadCost, roadCost, medalCost, roadCost, virusCost, roadCost};
 
     @Getter
     private int[][] matrixCost;
@@ -27,28 +24,29 @@ public class AddingObstruction {
                 if (maze.getCell(i, j).type == Cell.Type.WALL) {
                     matrixCost[i][j] = 0;
                 } else {
-                    int x = (int) (Math.random() * (typeCostCell.length - 1));
-                    matrixCost[i][j] = typeCostCell[x]; //заполнение пути и разными препятсивями
+                    int x = (int) (Math.random() * (TYPE_COST_CELL.length - 1));
+                    matrixCost[i][j] = TYPE_COST_CELL[x]; //заполнение пути и разными препятсивями
                 }
             }
         }
     }
 
+    @SuppressWarnings("MissingSwitchDefault")
     public void applyNewMaze() {
         cells = new Cell[matrixCost.length][matrixCost[0].length];
         for (int i = 0; i < matrixCost.length; i++) {
             for (int j = 0; j < matrixCost[0].length; j++) {
                 switch (matrixCost[i][j]) {
-                    case medalCost:
+                    case MEDAL_COST:
                         cells[i][j] = new Cell(i, j, Cell.Type.MEDAL);
                         break;
-                    case roadCost:
+                    case PASSAGE_COST:
                         cells[i][j] = new Cell(i, j, Cell.Type.PASSAGE);
                         break;
-                    case virusCost:
+                    case VIRUS_COST:
                         cells[i][j] = new Cell(i, j, Cell.Type.VIRUS);
                         break;
-                    default:
+                    case WALL_COST:
                         cells[i][j] = new Cell(i, j, Cell.Type.WALL);
                         break;
                 }
