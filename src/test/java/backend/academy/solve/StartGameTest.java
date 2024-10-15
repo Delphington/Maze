@@ -52,14 +52,14 @@ public class StartGameTest {
         String p = renderer.render(maze);
 
         String ans =
-            "#######\n"
-                + "#     #\n"
-                + "# #####\n"
-                + "#     #\n"
-                + "#  ####\n"
-                + "##   ##\n"
-                + "#  #  #\n"
-                + "#######\n";
+                  "⬛⬛⬛⬛⬛⬛⬛\n"
+                + "⬛⬜⬜⬜⬜⬜⬛\n"
+                + "⬛⬜⬛⬛⬛⬛⬛\n"
+                + "⬛⬜⬜⬜⬜⬜⬛\n"
+                + "⬛⬜⬜⬛⬛⬛⬛\n"
+                + "⬛⬛⬜⬜⬜⬛⬛\n"
+                + "⬛⬜⬜⬛⬜⬜⬛\n"
+                + "⬛⬛⬛⬛⬛⬛⬛\n";
 
         assertThat(p).isEqualTo(ans);
     }
@@ -95,14 +95,14 @@ public class StartGameTest {
         String renderedMaze = renderer.render(maze, solutionPath);
 
         String ans =
-            "#######\n"
-                + "#....S#\n"
-                + "#.#####\n"
-                + "#..   #\n"
-                + "# .####\n"
-                + "##...##\n"
-                + "#  #.F#\n"
-                + "#######\n";
+            "⬛⬛⬛⬛⬛⬛⬛\n"
+                + "⬛\uD83D\uDFE9\uD83D\uDFE9\uD83D\uDFE9\uD83D\uDFE9\uD83D\uDD34⬛\n"
+                + "⬛\uD83D\uDFE9⬛⬛⬛⬛⬛\n"
+                + "⬛\uD83D\uDFE9\uD83D\uDFE9⬜⬜⬜⬛\n"
+                + "⬛⬜\uD83D\uDFE9⬛⬛⬛⬛\n"
+                + "⬛⬛\uD83D\uDFE9\uD83D\uDFE9\uD83D\uDFE9⬛⬛\n"
+                + "⬛⬜⬜⬛\uD83D\uDFE9\uD83D\uDEA9⬛\n"
+                + "⬛⬛⬛⬛⬛⬛⬛\n";
 
         assertThat(renderedMaze).isEqualTo(ans);
     }
