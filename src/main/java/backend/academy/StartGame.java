@@ -1,17 +1,18 @@
 package backend.academy;
 
 import backend.academy.base.Coordinate;
-import backend.academy.base.DijkstraRender;
 import backend.academy.base.Maze;
-import backend.academy.base.MazeRender;
-import backend.academy.base.Renderer;
+import backend.academy.generate.AddingObstruction;
 import backend.academy.generate.DFSMaze;
 import backend.academy.generate.Generator;
-    import backend.academy.generate.AddingObstruction;
 import backend.academy.generate.kruskal.KruskalMaze;
 import backend.academy.input.InputValid;
+import backend.academy.render.DijkstraRender;
+import backend.academy.render.MazeRender;
+import backend.academy.render.Renderer;
 import backend.academy.solve.BFSSolverMaze;
 import backend.academy.solve.DFSSolverMaze;
+import backend.academy.solve.DijkstraSolverMaze;
 import backend.academy.solve.Solver;
 import java.io.PrintStream;
 import java.util.List;
@@ -30,30 +31,48 @@ public final class StartGame {
 
         Generator typeMaze; //Тип генерации лабиринта
         Maze maze; // Наш лабиринт
-        Renderer rendererMaze = new MazeRender();
+
+        Renderer rendererMaze;
         Solver solver;
         List<Coordinate> path;
 
-        //Генерация каким методом будем генерировать
+        AddingObstruction obstruction;
 
-
-
-        if (inputValid.typeGenerateMaze() == InputValid.TypeGenerate.DFS) {
-            typeMaze = new DFSMaze();
-        } else {
-            //maze
-            typeMaze = new KruskalMaze();
+        //Каким методом будем генерировать
+        switch (inputValid.typeGenerateMaze()) {
+            case DFS -> typeMaze = new DFSMaze();
+            case Kruskal -> typeMaze = new KruskalMaze();
+            default -> typeMaze = new KruskalMaze();
         }
-        //TODO: swtich
-        //Каким методом будем решать
-        if (inputValid.typeSolveMaze() == InputValid.TypeSolve.DFS) {
-            solver = new DFSSolverMaze();
-        } else {
-            solver = new BFSSolverMaze();
-        }
-
-        //-------------------------------------
+        //Генерируем
         maze = typeMaze.generate(inputValid.heightMaze(), inputValid.widthMaze());
+
+        //Каким методом будем решать
+        switch (inputValid.typeSolveMaze()) {
+            case InputValid.TypeSolve.DFS:
+                solver = new DFSSolverMaze();
+                rendererMaze = new MazeRender();
+                break;
+
+            case InputValid.TypeSolve.BFS:
+                solver = new BFSSolverMaze();
+                rendererMaze = new MazeRender();
+                break;
+
+            case InputValid.TypeSolve.DIJKSTRA:
+                solver = new DijkstraSolverMaze();
+                obstruction = new AddingObstruction(maze);
+                maze = obstruction.generateNewMaze();
+                rendererMaze = new DijkstraRender();
+                break;
+            default:
+                solver = new DijkstraSolverMaze();
+                obstruction = new AddingObstruction(maze);
+                maze = obstruction.generateNewMaze();
+                rendererMaze = new DijkstraRender();
+                break;
+        }
+
         //Исходный, что будем выводить
         String printMaze = rendererMaze.render(maze);
         printStream.println(printMaze);
@@ -72,32 +91,6 @@ public final class StartGame {
             printStream.println("Путь не был найден");
         } else {
             printStream.println(printMazePath);
-        }
-
-
-
-        AddingObstruction obstruction = new AddingObstruction(maze);
-
-        maze = obstruction.generateNewMaze();
-
-
-
-        //TODO: закрыть сканер
-
-        System.out.println("-------------------------------------------------");
-
-        rendererMaze = new DijkstraRender();
-        String s = rendererMaze.render(maze);
-        printStream.println(s);
-
-
-        solver = new DijkstraMaze();
-        path = solver.solve(maze, inputValid.startPoint(), inputValid.finishPoint());
-        if (path == null) {
-            System.out.println("Путь не найден!");
-        } else {
-            String ans = rendererMaze.render(maze, path);
-            printStream.println(ans);
         }
 
     }

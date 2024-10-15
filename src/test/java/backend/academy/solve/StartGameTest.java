@@ -3,7 +3,7 @@ package backend.academy.solve;
 import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
-import backend.academy.base.MazeRender;
+import backend.academy.render.MazeRender;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

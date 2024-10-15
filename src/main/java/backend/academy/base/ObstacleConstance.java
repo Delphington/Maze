@@ -1,4 +1,4 @@
-package backend.academy;
+package backend.academy.base;
 
 public interface ObstacleConstance {
     int PASSAGE_COST = 10;

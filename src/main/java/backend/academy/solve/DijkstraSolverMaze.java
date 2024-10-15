@@ -1,9 +1,9 @@
-package backend.academy;
+package backend.academy.solve;
 
 import backend.academy.base.Cell;
 import backend.academy.base.Coordinate;
 import backend.academy.base.Maze;
-import backend.academy.solve.Solver;
+import backend.academy.base.ObstacleConstance;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,13 +12,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-import lombok.Getter;
 
-public class DijkstraMaze implements Solver, ObstacleConstance {
 
-    @Getter
+/**
+ * Класс DijkstraSolverMaze реализует алгоритм Дейкстры для поиска кратчайшего пути в лабиринте.
+ * Алгоритм учитывает различные стоимости клеток: дорога, вируc, награда
+ */
+public class DijkstraSolverMaze implements Solver, ObstacleConstance {
+
     private List<Coordinate> path;
 
+
+    /**
+     * Преобразует двумерный массив клеток в массив стоимостей.
+     *
+     * @param cell Двумерный массив клеток, представляющий лабиринт.
+     * @return Двумерный массив стоимостей, соответствующий клеткам лабиринта.
+     */
     @SuppressWarnings("MissingSwitchDefault")
     private int[][] getMatrixCost(Cell[][] cell) {
         int[][] matrixCost = new int[cell.length][cell[0].length];
@@ -35,13 +45,32 @@ public class DijkstraMaze implements Solver, ObstacleConstance {
         return matrixCost;
     }
 
+
+    /**
+     * Решает задачу поиска пути в лабиринте
+     *
+     * @param maze  Лабиринт
+     * @param start Начальная координата в лабиринте
+     * @param end   Конечная координата в лабиринте
+     * @return Список координат, представляющий кратчайший путь от начальной до конечной точки.
+     */
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
         path = dijkstra(getMatrixCost(maze.grid()), start.row(), start.col(), end.row(), end.col());
         return path;
     }
 
-    // Метод для выполнения алгоритма Дейкстры
+    /**
+     * Выполняет алгоритм Дейкстры для поиска кратчайшего пути в лабиринте.
+     *
+     * @param maze   Двумерный массив стоимостей клеток
+     * @param startX Координата X начальной точки
+     * @param startY Координата Y начальной точки
+     * @param endX   Координата X конечной точки
+     * @param endY   Координата Y конечной точки
+     * @return Список координат, представляющий найденный путь от начальной до конечной точки,
+     *         или null, если путь не найден.
+     */
     private List<Coordinate> dijkstra(int[][] maze, int startX, int startY, int endX, int endY) {
         int rows = maze.length;
         int cols = maze[0].length;
@@ -99,7 +128,14 @@ public class DijkstraMaze implements Solver, ObstacleConstance {
         return null; // Если путь не найден
     }
 
-    // Метод для восстановления пути от конечной точки к начальной
+    /**
+     * Восстанавливает путь от конечной точки к начальной в виде списка координат.
+     *
+     * @param previous Словарь, содержащий предшествующие узлы для каждой координаты.
+     * @param endX     Координата X конечной точки.
+     * @param endY     Координата Y конечной точки.
+     * @return Список координат пути
+     */
     private List<Coordinate> constructPath(Map<String, String> previous, int endX, int endY) {
         List<Coordinate> localPath = new ArrayList<>();
         String key = endX + "," + endY; // Начинаем с конечной точки
@@ -112,12 +148,21 @@ public class DijkstraMaze implements Solver, ObstacleConstance {
         return localPath;
     }
 
-    // Вложенный класс для представления узла
+    /**
+     * Вложенный класс для представления узла в графе.
+     */
     private class Node {
         private int x;
         private int y;
         private int cost;
 
+        /**
+         * Конструктор класса Node.
+         *
+         * @param x    Координата X узла.
+         * @param y    Координата Y узла.
+         * @param cost Стоимость перемещения в данный узел.
+         */
         Node(int x, int y, int cost) {
             this.x = x; // Координата x
             this.y = y; // Координата y

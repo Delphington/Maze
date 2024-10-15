@@ -40,7 +40,8 @@ public final class InputValid implements Constants {
 
     public enum TypeSolve {
         DFS,
-        BFS
+        BFS,
+        DIJKSTRA
     }
 
     /**
@@ -67,7 +68,6 @@ public final class InputValid implements Constants {
      }
      */
 
-
     /**
      * Метод для ввода размеров лабиринта.
      */
@@ -93,7 +93,6 @@ public final class InputValid implements Constants {
         }
     }
 
-
     /**
      * Метод для выбора типа генерации лабиринта.
      */
@@ -103,7 +102,7 @@ public final class InputValid implements Constants {
                 + "[2] Генерация Kraskal\n"
                 + "Введите метод генерации лабиринта: ");
             line = scanner.nextLine().trim();
-            if (line.matches(TYPES_REG)) {
+            if (line.matches(REG_GENERATE)) {
                 if (line.charAt(0) == '1') {
                     typeGenerateMaze = TypeGenerate.DFS;
                     break;
@@ -115,29 +114,38 @@ public final class InputValid implements Constants {
         }
     }
 
-
     /**
      * Метод для выбора типа решения лабиринта.
      */
+
     public void inputTypeSolveMaze() {
         while (true) {
             printStream.print("[1] DFS\n"
                 + "[2] BFS\n"
+                + "[3] Решение лабирта с препятсвиями -> Dijkstra\n"
                 + "Введите метод решение лабиринта: ");
             line = scanner.nextLine().trim();
-            if (line.matches(TYPES_REG)) {
-                if (line.charAt(0) == '1') {
-                    typeSolveMaze = TypeSolve.DFS;
-                    break;
+            if (line.matches(REG_SOLVE)) {
+                switch (line.charAt(0)) {
+                    case '1':
+                        typeSolveMaze = TypeSolve.DFS;
+                        break;
+                    case '2':
+                        typeSolveMaze = TypeSolve.BFS;
+                        break;
+                    case '3':
+                        typeSolveMaze = TypeSolve.DIJKSTRA;
+                        break;
+                    default:
+                        typeSolveMaze = TypeSolve.DIJKSTRA;
+
                 }
-                typeSolveMaze = TypeSolve.BFS;
-                break;
+                return;
+
             }
             printStream.println(WARNING_INPUT);
         }
     }
-
-
 
     /**
      * Проверяет, является ли размер лабиринта допустимым.
@@ -155,7 +163,6 @@ public final class InputValid implements Constants {
         }
         return true;
     }
-
 
     /**
      * Проверяет строку на наличие разделителей и возвращает массив целых чисел.

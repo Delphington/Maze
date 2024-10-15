@@ -1,29 +1,47 @@
 package backend.academy.generate;
 
-import backend.academy.ObstacleConstance;
 import backend.academy.base.Cell;
 import backend.academy.base.Maze;
-import lombok.Getter;
+import backend.academy.base.ObstacleConstance;
 
+/**
+ * Класс AddingObstruction отвечает за добавление препятствий в лабиринт, добавляет
+ * награды и вирусы
+ * AddingObstruction преобразует лабиринт в матрицу с числами, изменяет числа, где есть
+ * проход и преобразует в новый лабиринт
+ */
 public class AddingObstruction implements ObstacleConstance {
     private Maze maze;
-
     private int[][] matrixCost;
-    @Getter
     private Cell[][] cells;
 
+    /**
+     * Конструктор класса AddingObstruction.
+     *
+     * @param maze Лабиринт, в который будут добавлены препятствия.
+     */
     public AddingObstruction(Maze maze) {
         this.maze = maze;
         matrixCost = new int[maze.height()][maze.width()];
     }
 
-    //SLAP :)
+
+    /**
+     * Генерирует новый лабиринт с добавленными препятствиями.
+     *
+     * @return Новый экземпляр класса Maze с обновленными ячейками.
+     */
     public Maze generateNewMaze() {
+        //SLAP :)
         mazeToMatrixIntAndChangeValues();
         setCellsNewValues();
         return new Maze(cells);
-
     }
+    /**
+     * Преобразует лабиринт в матрицу целых чисел и изменяет значения ячеек.
+     * Ячейки типа WALL получают значение 0, остальные заполняются случайными
+     * значениями
+     */
 
     private void mazeToMatrixIntAndChangeValues() {
         for (int i = 0; i < maze.height(); i++) {
@@ -38,6 +56,9 @@ public class AddingObstruction implements ObstacleConstance {
         }
     }
 
+    /**
+     * Устанавливает новые значения ячеек на основе матрицы стоимостей.
+     */
     @SuppressWarnings("MissingSwitchDefault")
     private void setCellsNewValues() {
         cells = new Cell[matrixCost.length][matrixCost[0].length];
