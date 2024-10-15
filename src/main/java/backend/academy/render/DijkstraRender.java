@@ -12,46 +12,14 @@ import java.util.List;
 @SuppressWarnings("MissingSwitchDefault")
 public class DijkstraRender implements Renderer {
 
-    /**
-     * Отображает лабиринт в текстовом виде без пути.
-     *
-     * @param maze Лабиринт, который нужно отобразить.
-     * @return Строка, представляющая визуализацию лабиринта.
-     */
 
-    @Override
-    public String render(Maze maze) {
-        StringBuilder builder = new StringBuilder();
-        Cell[][] grid = maze.grid();
-        for (int x = 0; x < grid.length; x++) {
-            for (int y = 0; y < grid[x].length; y++) {
-                switch (grid[x][y].type) {
-                    case WALL -> builder.append('⬛');
-                    case MEDAL -> builder.append('\uD83E').append('\uDD47');
-                    case VIRUS -> builder.append('\uD83E').append('\uDDA0');
-                    case PASSAGE -> builder.append('⬜');
-                }
-            }
-            builder.append('\n');
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Отображает лабиринт с отмеченным путем
-     *
-     * @param maze Лабиринт, который нужно отобразить
-     * @param path Список координат, представляющий путь в лабиринте
-     * @return Строка, представляющая визуализацию лабиринта с отмеченным путем.
-     */
-
-    @Override
-    public String render(Maze maze, List<Coordinate> path) {
+    private String generalRender(Maze maze, List<Coordinate> path) {
         StringBuilder builder = new StringBuilder();
         Cell[][] grid = maze.grid();
 
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[x].length; y++) {
+
                 Coordinate temp = new Coordinate(x, y);
                 if (path != null && path.contains(temp)) {
                     if (path.get(0).equals(temp)) {
@@ -63,16 +31,52 @@ public class DijkstraRender implements Renderer {
                     }
 
                 } else {
-                    switch (grid[x][y].type) {
-                        case WALL -> builder.append('⬛');
-                        case MEDAL -> builder.append('\uD83E').append('\uDD47');
-                        case VIRUS -> builder.append('\uD83E').append('\uDDA0');
-                        case PASSAGE -> builder.append('⬜');
+                    if (path == null) {
+                        switch (grid[x][y].type) {
+                            case WALL -> builder.append('⬛');
+                            case MEDAL -> builder.append('\uD83E').append('\uDD47');
+                            case VIRUS -> builder.append('\uD83E').append('\uDDA0');
+                            case PASSAGE -> builder.append('⬜');
+                        }
+                    } else {
+
+                        switch (grid[x][y].type) {
+                            case WALL -> builder.append('⬛');
+                            case MEDAL -> builder.append('\uD83E').append('\uDD47');
+                            case VIRUS -> builder.append('\uD83E').append('\uDDA0');
+                            case PASSAGE -> builder.append('⬜');
+                        }
                     }
                 }
             }
             builder.append('\n');
         }
         return builder.toString();
+    }
+
+
+    /**
+     * Отображает лабиринт в текстовом виде без пути.
+     *
+     * @param maze Лабиринт, который нужно отобразить.
+     * @return Строка, представляющая визуализацию лабиринта.
+     */
+
+    @Override
+    public String render(Maze maze) {
+        return generalRender(maze, null);
+    }
+
+    /**
+     * Отображает лабиринт с отмеченным путем
+     *
+     * @param maze Лабиринт, который нужно отобразить
+     * @param path Список координат, представляющий путь в лабиринте
+     * @return Строка, представляющая визуализацию лабиринта с отмеченным путем.
+     */
+    @Override
+    public String render(Maze maze, List<Coordinate> path) {
+        return generalRender(maze, path);
+
     }
 }
