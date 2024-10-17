@@ -46,7 +46,7 @@ public class SolveMazeSimpleTest {
     };
 
     @Test
-    public void testRenderMaze() {
+    public void renderMazeTest() {
         Maze maze = new Maze(grid);
         MazeRender renderer = new MazeRender();
         String p = renderer.render(maze);
@@ -65,7 +65,7 @@ public class SolveMazeSimpleTest {
     }
 
     @Test
-    public void testRenderSolution() {
+    public void renderSimpleSolutionTest() {
         Maze maze = new Maze(grid);
 
         MazeRender renderer = new MazeRender();
@@ -92,7 +92,7 @@ public class SolveMazeSimpleTest {
             new Coordinate(6, 5)
         );
 
-        String renderedMaze = renderer.render(maze, solutionPath);
+        String renderPath = renderer.render(maze, solutionPath);
 
         String ans =
             "⬛⬛⬛⬛⬛⬛⬛\n"
@@ -104,19 +104,18 @@ public class SolveMazeSimpleTest {
                 + "⬛⬜⬜⬛\uD83D\uDFE9\uD83D\uDEA9⬛\n"
                 + "⬛⬛⬛⬛⬛⬛⬛\n";
 
-        assertThat(renderedMaze).isEqualTo(ans);
+        assertThat(renderPath).isEqualTo(ans);
     }
 
     @Test
-    public void testSolve() {
+    public void solveSimpleTst() {
         Maze maze = new Maze(grid);
         Coordinate start = new Coordinate(1, 5);
         Coordinate finish = new Coordinate(6, 5);
         Solver solver = new BFSSolverMaze();
-
-        List<Coordinate> pathSolution = solver.solve(maze, start, finish);
-        assertThat(pathSolution.get(0)).isEqualTo(start);
-        assertThat(pathSolution.get(pathSolution.size() - 1)).isEqualTo(finish);
+        List<Coordinate> path = solver.solve(maze, start, finish);
+        assertThat(path.get(0)).isEqualTo(start);
+        assertThat(path.get(path.size() - 1)).isEqualTo(finish);
     }
 }
 
