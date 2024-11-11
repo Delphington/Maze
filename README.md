@@ -6,10 +6,11 @@
 ## Демонстрация работы
 Пример 1: Генерация с препятсвиями
 
+![ex1](https://github.com/user-attachments/assets/87cfbf6e-49e4-47ba-8c6f-3d524ae774fc)
 
 
 Пример 2: Генерация без препятсвий 
-![2024-11-12_00h04_10](https://github.com/user-attachments/assets/f5aa3945-bf67-42c3-bdf4-769d42967bbd)
+
 
 
 ## Структура проекта
