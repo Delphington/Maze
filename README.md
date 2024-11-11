@@ -6,7 +6,8 @@
 ## Демонстрация работы
 Пример 1: Генерация с препятсвиями
 
-![ex1](https://github.com/user-attachments/assets/87cfbf6e-49e4-47ba-8c6f-3d524ae774fc)
+
+![ScreenRecorderProject1](https://github.com/user-attachments/assets/3fad7676-a1dc-41a4-9dfa-1589e89fb987)
 
 
 Пример 2: Генерация без препятсвий 
